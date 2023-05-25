@@ -509,7 +509,6 @@ def reset_password():
 #
 #     return 'Password has been reset!'
 
-# TODO добавить /api/ к роутингу
 # TODO проверить
 @app.route('/api/reset-password/<reset_token>', methods=['POST'])
 def reset_password_token(reset_token):

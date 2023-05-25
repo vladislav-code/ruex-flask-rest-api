@@ -24,20 +24,6 @@ app.config.from_object(DevelopmentConfig) #
 # pewee or alchemy ???
 
 
-# вынести в config
-app.config['MAIL_SERVER'] = os.getenv('SMTP_SERVER')
-app.config['MAIL_PORT'] = os.getenv('SMTP_PORT')
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.getenv('SMTP_USERNAME')  # Введите свою почту
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('SMTP_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('SMTP_PASSWORD')  # Введите свой пароль
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db' # change to ruex.db
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
-app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY') # change secret !!!!!!!!!!!!!!!!!!!
 
 import views
-
-
-# jwt = JWTManager(app)

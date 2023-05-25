@@ -80,20 +80,18 @@ def send_mail():
         phone = request.json['phone']
         reason = request.json['reason']
 
-        sender = "s.thesame@yandex.ru"
-        password = "afrrsbcerimwgkzw"
         recipients = ["s.thesame@yandex.ru"]
 
         msg = MIMEText(f"Name: {name}\nPhone: {phone}\nReason: {reason}")
         msg['Subject'] = "New request from website"
-        msg['From'] = sender
+        msg['From'] = username
         msg['To'] = ", ".join(recipients)
 
         try:
             server = smtplib.SMTP('smtp.yandex.ru', 587)
             server.starttls()  # использование шифрования
-            server.login(sender, password)
-            server.sendmail(sender, recipients, msg.as_string())
+            server.login(username, password)
+            server.sendmail(username, recipients, msg.as_string())
             server.quit()
             return jsonify({"message": "Mail sent successfully"}), 200
         except Exception as e:
