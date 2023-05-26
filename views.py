@@ -512,26 +512,4 @@ def reset_password():
 # TODO проверить
 @app.route('/api/reset-password/<reset_token>', methods=['POST'])
 def reset_password_token(reset_token):
-    try:
-        # Мы не используем здесь jwt_required, так как токен передается в URL, а не в заголовке Authorization.
-        decoded_token = decode_token(reset_token, allow_expired=True)
-        email = decoded_token['sub']  # get_jwt_identity?
-    except:
-        return jsonify({"msg": "The password reset link is invalid or has expired."}), 400
-
-    user = User.query.filter_by(email=email).first()
-    if user is None:
-        return jsonify({"msg": "User not found"}), 404
-
-    data = request.get_json()
-    new_password = data.get('password')
-    if new_password is None:
-        return jsonify({"msg": "No password provided"}), 400
-
-    user.password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
-
-    return jsonify({"msg": "Password has been reset!"}), 200
+    return reset_password_token(reset_token)

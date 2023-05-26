@@ -7,10 +7,10 @@ import datetime
 from flask_bcrypt import Bcrypt
 
 from models import Service  # order_service
-# from flask_mail import Message
+from flask_mail import Message
 from flask import request, url_for, jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity
-# from main import mail
+from main import mail
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -79,20 +79,14 @@ def send_mail():
         name = request.json['name']
         phone = request.json['phone']
         reason = request.json['reason']
-
-        recipients = ["s.thesame@yandex.ru"]
-
-        msg = MIMEText(f"Name: {name}\nPhone: {phone}\nReason: {reason}")
-        msg['Subject'] = "New request from website"
-        msg['From'] = username
-        msg['To'] = ", ".join(recipients)
+        recipients = ["vladoska75@gmail.com"]
 
         try:
-            server = smtplib.SMTP('smtp.yandex.ru', 587)
-            server.starttls()  # использование шифрования
-            server.login(username, password)
-            server.sendmail(username, recipients, msg.as_string())
-            server.quit()
+            msg = Message('New request from website')
+            msg.recipients = recipients
+            msg.body = f"Имя: {name}\nТелефон: {phone}\nПричина: {reason}"
+            mail.send(msg)
+
             return jsonify({"message": "Mail sent successfully"}), 200
         except Exception as e:
             return jsonify({"message": str(e)}), 500
@@ -123,7 +117,7 @@ def register():
     except IntegrityError:  # all fields are unique
         return jsonify(message="User with that username or email already exists"), 400
     # TODO расположение токена
-    msg = MIMEText('Your confirmation link is {}'.format(url_for('api_confirm_email', token=token, _external=True)))
+    msg = MIMEText('Your confirmation link is {}'.format(url_for('confirm_email', token=token, _external=True))) # external ???
     msg['Subject'] = 'Confirm Email'
     msg['From'] = username # почта сервера
     msg['To'] = data['email']
@@ -190,3 +184,29 @@ def reset_password():
         print(e)
 
     return 'Email sent!'
+
+
+def reset_password_token(reset_token):
+    try:
+        # Мы не используем здесь jwt_required, так как токен передается в URL, а не в заголовке Authorization.
+        decoded_token = decode_token(reset_token, allow_expired=True)
+        email = decoded_token['sub']  # get_jwt_identity?
+    except:
+        return jsonify({"msg": "The password reset link is invalid or has expired."}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    data = request.get_json()
+    new_password = data.get('password')
+    if new_password is None:
+        return jsonify({"msg": "No password provided"}), 400
+
+    user.password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
+
+    return jsonify({"msg": "Password has been reset!"}), 200
