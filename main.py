@@ -24,6 +24,5 @@ mail = Mail(app)
 # pewee or alchemy ???
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db' # change to ruex.db
 
 import views

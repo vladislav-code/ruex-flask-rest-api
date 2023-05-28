@@ -73,6 +73,19 @@ password = os.getenv('SMTP_PASSWORD')
 #     return jsonify({'message': 'User created successfully'}), 201
 
 
+def login():
+    # добавить проверки данных
+    # проверка наличия данных
+    data = request.get_json()
+    user = User.query.filter_by(email=data['email']).first()
+    if user and bcrypt.check_password_hash(user.password_hash, data['password']):
+        expires = datetime.timedelta(hours=4)
+        access_token = create_access_token(identity=user.id, expires_delta=expires)
+        return jsonify(access_token=access_token), 200
+    else:
+        return jsonify(message="Invalid email or password"), 401
+
+
 # использовать сервис почтовой рассылки
 def send_mail():
     if request.method == 'POST':
@@ -140,15 +153,13 @@ def reset_password():
     email = user.email
     expires = datetime.timedelta(hours=24)  # Token will expire in 24 hours
     token = create_access_token(identity=email, expires_delta=expires)
-
-    msg = MIMEMultipart()
-    msg['From'] = username # "your_email@example.com"
-    msg['To'] = email
-    msg['Subject'] = 'Password Reset Request'
-    # TODO расположение токена
     link = url_for('api_reset_password_token', reset_token=token, _external=True)
 
-    html = """
+    msg = Message('Password Reset Request',
+                  sender=current_app.config['MAIL_USERNAME'],
+                  recipients=[email])
+
+    msg.html = """
     <html>
       <body>
         <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Hello!</h1>
@@ -163,27 +174,71 @@ def reset_password():
       </body>
     </html>
     """.format(link)
-    # TODO красивый шаблон корпоративного письма с ссылками на сайт от ЮРЫ
 
-    msg.attach(MIMEText(html, 'html'))
-
-    msg.attach(MIMEText('Follow this link to reset your password: {}'.format(link), 'plain'))
+    msg.body = 'Follow this link to reset your password: {}'.format(link)
 
     try:
-        server = smtplib.SMTP(smtp_server,port)
-        server.ehlo() # Can be omitted
-        server.starttls() # Secure the connection
-        server.ehlo() # Can be omitted
-        server.login(username, password)
-        server.sendmail(msg['From'], msg['To'], msg.as_string())
-        server.close()
-
+        mail.send(msg)
         print('Email sent!')
     except Exception as e:
         # Print any error messages to stdout
         print(e)
 
     return 'Email sent!'
+
+
+# def reset_password():
+#     user_id = get_jwt_identity()
+#     user = User.query.get(user_id)
+#     if user is None:
+#         return jsonify({"msg": "User not found"}), 404
+#     email = user.email
+#     expires = datetime.timedelta(hours=24)  # Token will expire in 24 hours
+#     token = create_access_token(identity=email, expires_delta=expires)
+#
+#     msg = MIMEMultipart()
+#     msg['From'] = username # "your_email@example.com"
+#     msg['To'] = email
+#     msg['Subject'] = 'Password Reset Request'
+#     # TODO расположение токена
+#     link = url_for('api_reset_password_token', reset_token=token, _external=True)
+#
+#     html = """
+#     <html>
+#       <body>
+#         <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Hello!</h1>
+#         <p style="color: #355C7D; font-family: Arial, sans-serif;">
+#           We received a request to reset your password. If you didn't make the request, just ignore this email.
+#           Otherwise, you can reset your password using this link:
+#         </p>
+#         <a href="{}" style="background-color: #6C5B7B; color: #fff; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 20px 0;">
+#           Click here to reset your password
+#         </a>
+#         <p style="color: #355C7D; font-family: Arial, sans-serif;">Thank you!</p>
+#       </body>
+#     </html>
+#     """.format(link)
+#     # TODO красивый шаблон корпоративного письма с ссылками на сайт от ЮРЫ
+#
+#     msg.attach(MIMEText(html, 'html'))
+#
+#     msg.attach(MIMEText('Follow this link to reset your password: {}'.format(link), 'plain'))
+#
+#     try:
+#         server = smtplib.SMTP(smtp_server,port)
+#         server.ehlo() # Can be omitted
+#         server.starttls() # Secure the connection
+#         server.ehlo() # Can be omitted
+#         server.login(username, password)
+#         server.sendmail(msg['From'], msg['To'], msg.as_string())
+#         server.close()
+#
+#         print('Email sent!')
+#     except Exception as e:
+#         # Print any error messages to stdout
+#         print(e)
+#
+#     return 'Email sent!'
 
 
 def reset_password_token(reset_token):

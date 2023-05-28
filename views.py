@@ -2,9 +2,9 @@
 # роутинг
 from flask import jsonify, request
 from sqlalchemy import func
-from main import app  # , mail
+from main import app
 import funcs
-from models import User, Service, Order, db
+from models import User, Service, Order, Document, db
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 # from flask_mail import Message
 from utils import admin_required
@@ -169,18 +169,9 @@ def send_email():
 #     return jsonify(message="User registered successfully"), 201
 
 
-# TODO восстановление пароля по почте
 @app.route('/api/login', methods=['POST'])
-# добавить проверки данных
-# проверка наличия данных
 def login():
-    data = request.get_json()
-    user = User.query.filter_by(email=data['email']).first()
-    if user and bcrypt.check_password_hash(user.password_hash, data['password']):
-        access_token = create_access_token(identity=user.id)
-        return jsonify(access_token=access_token), 200
-    else:
-        return jsonify(message="Invalid email or password"), 401
+    return funcs.login()
 
 
 @app.route('/api/user', methods=['GET', 'PUT', 'DELETE'])
@@ -513,3 +504,67 @@ def reset_password():
 @app.route('/api/reset-password/<reset_token>', methods=['POST'])
 def reset_password_token(reset_token):
     return reset_password_token(reset_token)
+
+
+@app.route('/orders/<int:order_id>/documents', methods=['POST'])
+def add_document(order_id):
+    file = request.files['file']
+    name = file.filename
+    file_path = f'path/to/save/{name}'  # Путь для сохранения файла на сервере
+    file.save(file_path)
+    new_document = Document(name=name, file_path=file_path, order_id=order_id)
+    db.session.add(new_document)
+    db.session.commit()
+    return jsonify({'message': 'Document added successfully', 'document_id': new_document.id}), 201
+
+
+@app.route('/orders/<int:order_id>/documents', methods=['GET'])
+def get_order_documents(order_id):
+    order = Order.query.get_or_404(order_id)
+    documents = order.documents
+    documents_data = [{'id': doc.id, 'name': doc.name, 'file_path': doc.file_path} for doc in documents]
+    return jsonify({'order_id': order_id, 'documents': documents_data}), 200
+
+
+@app.route('/orders ', methods=['POST'])
+def create_order_with_files():
+    client_id = request.form.get('client_id')
+    service_id = request.form.get('service_id')
+    status = request.form.get('status')
+
+    files = request.files.getlist('files')
+
+    new_order = Order(client_id=client_id, service_id=service_id, status=status)
+
+    for file in files:
+        name = file.filename
+        file_path = f'path/to/save/{name}'  # Путь для сохранения файла на сервере
+        file.save(file_path)
+
+        new_document = Document(name=name, file_path=file_path)
+        new_order.documents.append(new_document)
+
+    db.session.add(new_order)
+    db.session.commit()
+
+    return jsonify({'message': 'Order created successfully', 'order_id': new_order.id}), 201
+
+
+UPLOAD_DIRECTORY = '/path/to/save'  # Укажите путь к основной директории для хранения файлов
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    order_id = request.form.get('order_id')
+    order_directory = os.path.join(UPLOAD_DIRECTORY, str(order_id))
+
+    if not os.path.exists(order_directory):
+        os.makedirs(order_directory)
+
+    file = request.files['file']
+    file_path = os.path.join(order_directory, file.filename)
+    file.save(file_path)
+
+    # Сохраните file_path в базе данных, чтобы связать файл с соответствующим заказом
+
+    return 'File uploaded successfully'

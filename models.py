@@ -55,10 +55,19 @@ class Service(db.Model):
     execution_time = db.Column(db.String(20))
 
 
+class Document(db.Model):
+    __tablename__ = 'documents'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    file_path = db.Column(db.String(255))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+
+
 # Создание контекста приложения
-with app.app_context():
-    # Создание таблиц в базе данных
-    db.create_all()
+# with app.app_context():
+#     # Создание таблиц в базе данных
+#     db.create_all()
 
 
 # class Review(db.Model):

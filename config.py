@@ -4,7 +4,7 @@ import os
 
 
 class DevelopmentConfig:
-    DEBUG = True
+    DEBUG = True # change in production
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SECRET_KEY = os.getenv('SECRET_KEY')
     MAIL_SERVER = os.getenv('MAIL_SERVER')
@@ -16,3 +16,4 @@ class DevelopmentConfig:
     MAIL_DEFAULT_SENDER = os.getenv('MAIL_USERNAME')
     MAIL_MAX_EMAIL = None
     MAIL_ASCII_ATTACHMENTS = False
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
