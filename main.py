@@ -3,26 +3,17 @@
 # добавить logger
 # логгирование
 from flask import Flask
-import os
 from flask_mail import Mail
-# from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager, jwt_required
 # в модуле tests проверка на name error локально
 # невыполняющиеся импорты
 # желательно проверить все IF
 
 
 from config import DevelopmentConfig
-# from models import Order, Service, order_service
 
 app = Flask(__name__) #
 app.config.from_object(DevelopmentConfig) #
 mail = Mail(app)
-
-# ruex_db = SqliteDatabase("ruex.db") for pewee
-# выбрать бД и создать ее
-# pewee or alchemy ???
-
 
 
 import views

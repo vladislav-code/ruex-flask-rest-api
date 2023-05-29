@@ -2,29 +2,18 @@
 # роутинг
 from flask import jsonify, request
 from sqlalchemy import func
-from werkzeug.utils import secure_filename
 
 from main import app
 import funcs
 from models import User, Service, Order, Document, db
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 # from flask_mail import Message
-from utils import admin_required
-
+from utils import admin_required, confirmed_required
+# TODO добавить требование подтвержденного пользователя
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-import os #
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
-
-
-@app.route('/api/orders', methods=['GET'])
-@jwt_required()  # Декоратор, требующий авторизации по JWT токену для доступа к эндпоинту
-def get_orders():
-    orders = Order.query.all()
-    return jsonify(
-        [{'id': o.id, 'customer_name': o.customer_name, 'custome_email': o.customer_email, 'order_date': o.order_date}
-         for o in orders])
 
 
 # @app.route('/services', methods=['GET'])
@@ -127,7 +116,7 @@ def get_orders():
 
 
 # подтверждение регистрации
-from flask_jwt_extended import decode_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 
 # @app.route('/confirm-registration/<token>', methods=['GET'])
@@ -317,12 +306,6 @@ def register():
 #     return 'Password has been reset!'
 
 
-# Настройка smtplib
-# smtp_server = os.getenv('SMTP_SERVER')
-# port = 587  # For starttls
-# username = os.getenv('SMTP_USERNAME')
-# password = os.getenv('SMTP_PASSWORD')
-
 @app.route('/api/reset-password', methods=['POST']) # добавить jwt
 @jwt_required()
 def reset_password():
@@ -347,59 +330,7 @@ def reset_password_token(reset_token):
     return reset_password_token(reset_token)
 
 
-UPLOAD_DIRECTORY = 'files/documents'  # путь к основной директории для хранения файлов
-
-
-@app.route('/create_order', methods=['POST'])
+@app.route('/api/create_order', methods=['POST'])
 @jwt_required()
 def create_order():
-    user_id = get_jwt_identity()
-    data = request.form
-
-    if 'direction' not in data or 'type' not in data or 'details' not in data or 'specific' not in data or 'price' not in data or 'execution_time' not in data:
-        return jsonify({"msg": "Missing service parameters"}), 400
-
-    service = Service.query.filter_by(direction=data['direction'], type=data['type'], details=data['details'],
-                                      specific=data['specific'], price=data['price'],
-                                      execution_time=data['execution_time']).first()
-    if service is None:
-        return jsonify({"msg": "Service not found"}), 404
-
-    new_order = Order(
-        client_id=user_id,
-        service_id=service.id,
-        status='Принят'
-    )
-
-    db.session.add(new_order)
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
-
-        # Handle file upload
-    if 'file' in request.files:
-        file = request.files['file']
-        if file:
-            order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
-
-            if not os.path.exists(order_directory):
-                os.makedirs(order_directory)
-
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(order_directory, filename)
-            file.save(file_path)
-
-            # Save the file_path in your database
-            new_document = Document(
-                name=filename,
-                file_path=file_path,
-                order_id=new_order.id
-            )
-            db.session.add(new_document)
-            try:
-                db.session.commit()
-            except SQLAlchemyError as e:
-                return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
-
-    return jsonify({"msg": "Order created successfully!"}), 201
+    return funcs.create_order()

@@ -5,16 +5,14 @@
 import datetime
 
 from flask_bcrypt import Bcrypt
+from werkzeug.utils import secure_filename
 
-from models import Service  # order_service
 from flask_mail import Message
 from flask import request, url_for, jsonify
-from flask_jwt_extended import create_access_token, get_jwt_identity
+from flask_jwt_extended import create_access_token, get_jwt_identity, decode_token
 from main import mail
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import utils
 from models import User, Service, Order, Document, db
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from main import app
@@ -25,10 +23,7 @@ import os
 
 bcrypt = Bcrypt(app)
 
-smtp_server = os.getenv('SMTP_SERVER')
-port = 587  # For starttls
-username = os.getenv('SMTP_USERNAME')
-password = os.getenv('SMTP_PASSWORD')
+UPLOAD_DIRECTORY = 'files/documents'  # путь к основной директории для хранения файлов
 
 
 # def register():
@@ -155,6 +150,7 @@ def get_user_orders():
     user_id = get_jwt_identity()
     orders = db.session.query(Order, Service).join(Service, Order.service_id == Service.id).filter(Order.client_id == user_id).all()
     orders_list = []
+    # TODO убрать id и заменить client_id на данные клиента
     for order, service in orders:
         order_data = {
             'id': order.id, ###
@@ -175,32 +171,32 @@ def get_user_orders():
     return jsonify(orders_list), 200
 
 
-def create_order():
-    user_id = get_jwt_identity()
-    data = request.get_json()
-
-    if 'direction' not in data or 'type' not in data or 'details' not in data or 'specific' not in data or 'price' not in data or 'execution_time' not in data:
-        return jsonify({"msg": "Missing service parameters"}), 400
-
-    service = Service.query.filter_by(direction=data['direction'], type=data['type'], details=data['details'],
-                                      specific=data['specific'], price=data['price'],
-                                      execution_time=data['execution_time']).first()
-    if service is None:
-        return jsonify({"msg": "Service not found"}), 404
-
-    new_order = Order(
-        client_id=user_id,
-        service_id=service.id,
-        status='Принят'
-    )
-
-    db.session.add(new_order)
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
-
-    return jsonify({"msg": "Order created successfully!"}), 201
+# def create_order():
+#     user_id = get_jwt_identity()
+#     data = request.get_json()
+#
+#     if 'direction' not in data or 'type' not in data or 'details' not in data or 'specific' not in data or 'price' not in data or 'execution_time' not in data:
+#         return jsonify({"msg": "Missing service parameters"}), 400
+#
+#     service = Service.query.filter_by(direction=data['direction'], type=data['type'], details=data['details'],
+#                                       specific=data['specific'], price=data['price'],
+#                                       execution_time=data['execution_time']).first()
+#     if service is None:
+#         return jsonify({"msg": "Service not found"}), 404
+#
+#     new_order = Order(
+#         client_id=user_id,
+#         service_id=service.id,
+#         status='Принят'
+#     )
+#
+#     db.session.add(new_order)
+#     try:
+#         db.session.commit()
+#     except SQLAlchemyError as e:
+#         return jsonify({"msg": "Database error occurred. " + str(e)}), 500
+#
+#     return jsonify({"msg": "Order created successfully!"}), 201
 
 
 def get_admin_orders():
@@ -294,8 +290,6 @@ def send_mail():
             return jsonify({"message": str(e)}), 500
 
 
-# TODO вынести сервер в глобальную переменную
-# TODO вынести почту и пароль в глобальные переменные
 def register():
     data = request.get_json()
 
@@ -318,19 +312,15 @@ def register():
         db.session.commit()
     except IntegrityError:  # all fields are unique
         return jsonify(message="User with that username or email already exists"), 400
-    # TODO расположение токена
-    msg = MIMEText('Your confirmation link is {}'.format(url_for('confirm_email', token=token, _external=True))) # external ???
-    msg['Subject'] = 'Confirm Email'
-    msg['From'] = username # почта сервера
-    msg['To'] = data['email']
 
-    # s = smtplib.SMTP(smtp_server, port)
-    # s.starttls()  # использование шифрования
-    # s.login(username, password)
-    # s.send_message(msg)
-    # s.quit()
+    confirmation_url = url_for('confirm_email', token=token, _external=True)
+    msg = Message('Confirm Email', sender=app.config['MAIL_USERNAME'], recipients=[data['email']])
+    msg.body = f'Your confirmation link is {confirmation_url}'
 
-    return jsonify(url_for('confirm_email', token=token, _external=True)), 201
+    mail.send(msg)
+
+    return jsonify(message="Confirmation email sent. Please confirm your email."), 201
+    # return jsonify(url_for('confirm_email', token=token, _external=True)), 201
     # return jsonify(message="Confirmation email sent. Please confirm your email."), 201
 
 
@@ -454,3 +444,56 @@ def reset_password_token(reset_token):
         return jsonify({"msg": "Database error occurred. " + str(e)}), 500
 
     return jsonify({"msg": "Password has been reset!"}), 200
+
+
+def create_order():
+    user_id = get_jwt_identity()
+    data = request.form
+
+    if 'direction' not in data or 'type' not in data or 'details' not in data or 'specific' not in data or 'price' not in data or 'execution_time' not in data:
+        return jsonify({"msg": "Missing service parameters"}), 400
+
+    service = Service.query.filter_by(direction=data['direction'], type=data['type'], details=data['details'],
+                                      specific=data['specific'], price=data['price'],
+                                      execution_time=data['execution_time']).first()
+    if service is None:
+        return jsonify({"msg": "Service not found"}), 404
+
+    new_order = Order(
+        client_id=user_id,
+        service_id=service.id,
+        status='Принят'
+    )
+
+    db.session.add(new_order)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
+
+        # Handle file upload
+    if 'file' in request.files:
+        file = request.files['file']
+        if file:
+            order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
+
+            if not os.path.exists(order_directory):
+                os.makedirs(order_directory)
+
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(order_directory, filename)
+            file.save(file_path)
+
+            # Save the file_path in your database
+            new_document = Document(
+                name=filename,
+                file_path=file_path,
+                order_id=new_order.id
+            )
+            db.session.add(new_document)
+            try:
+                db.session.commit()
+            except SQLAlchemyError as e:
+                return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
+
+    return jsonify({"msg": "Order created successfully!"}), 201
