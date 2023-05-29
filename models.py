@@ -1,11 +1,12 @@
 from datetime import datetime
 from main import app
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # вынести создание бд в этот модуль
 
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 # from werkzeug.security import generate_password_hash, check_password_hash
 
