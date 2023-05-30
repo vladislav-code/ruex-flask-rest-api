@@ -2,13 +2,13 @@
 # TODO данные почты в отдельный файл
 # try catch уязвимых областей
 # валидация данных
-from datetime import datetime
-
+# from datetime import datetime, timedelta
+import datetime
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 from utils import allowed_file
 from flask_mail import Message
-from flask import request, url_for, jsonify, make_response
+from flask import request, url_for, jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity, decode_token
 from main import mail
 from email.mime.text import MIMEText
@@ -81,9 +81,7 @@ def get_services():
             'execution_time': service.execution_time
         }
         services_list.append(service_data)
-    response = make_response(jsonify(services_list))
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
-    return response
+    return jsonify(services_list), 200
 
 
 def get_user_orders():

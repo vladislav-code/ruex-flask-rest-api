@@ -4,6 +4,7 @@
 # логгирование
 from flask import Flask
 from flask_mail import Mail
+from flask_cors import CORS
 # в модуле tests проверка на name error локально
 # невыполняющиеся импорты
 # желательно проверить все IF
@@ -12,8 +13,10 @@ from flask_mail import Mail
 from config import DevelopmentConfig
 
 app = Flask(__name__) #
+CORS(app)
 app.config.from_object(DevelopmentConfig) #
 mail = Mail(app)
+app.config['JSON_AS_ASCII'] = False
 
 
 import views
