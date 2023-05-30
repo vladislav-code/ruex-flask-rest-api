@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+
+  <header class="header">
+    <section class="flex">
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+      <a href="{{ url_for('home') }}" class="logo"> <img src="{{ url_for('static', filename='images/logo.png') }}"></a>
+      <a href="{{ url_for('home') }}" class="logo">
+        РусЭксперт-Сервис
+      </a>
+      <nav class="navbar">
+
+        <a href="{{ url_for('static', filename='home.html') }}">Главная страница</a>
+        <a href="{{ url_for('static', filename='services.html') }}">Услуги</a>
+        <a href="{{ url_for('static', filename='prices.html') }}">Цены</a>
+        <a href="{{ url_for('static', filename='about.html') }}">О нас</a>
+        <a href="{{ url_for('static', filename='contacts.html') }}">Контакты</a>
+        <a href="{{ url_for('static', filename='account.html') }}">Личный кабинет</a>            
+
+      </nav>
+      <div>
+        <div>
+          <button class="btn" data-path="one">Заказать звонок</button>
+        </div>
+        <div>
+          <button href="#" class="btn-services" >Оформить услугу онлайн</button>
+        </div>
+        <div>
+          <button onclick="location.href='myorders.html'" type="button" id="myorders-btn">Мои заказы</button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <div class="modals-call">
+    <div class="modal-overlay">
+      <div class="modal modal--1" data-target="one">
+        <div class="modal-content">
+          <section class="body-modal">
+
+            <form action="" id="form" method="POST" class="form">
+              
+              <div class="row">
+                <label for="name">Ваше имя</label>
+              </div>
+              <div class="row">
+                <input type="text" name="name" placeholder="Ваше имя" class="input _req _name">
+              </div>
+              <div class="row">
+                <label for="phone">Контактный телефон:</label>
+              </div>
+              <div class="row">
+                <input type="tel" name="phone" placeholder="+7(000)000-00-00" class="input _req _tel">
+              </div>
+              <div>
+                <button type="submit" class="btn">Позвоните мне</button>
+              </div>
+              
+            </form>
+
+            <script src="{{ url_for('static', filename='js/inputmask.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/phonemask.js') }}"></script>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="home-container-about">
+
+    <h1 class="heading1">РусЭксперт-Сервис</h1>
+    <h2 class="heading2">ООО "РусЭксперт-Сервис" – независимая экспертиза и оценка, более 5000 отчётов в год.
+      <br>На рынке с 2014 года. Нам доверяют!</h2>
+  </section>
+
+  <div class="home-container">
+
+    <section class="home">
+
+      <form action="" method="post" id="form-contact">
+        <h3>
+          Оценка повреждений от 2500₽<br>Отправьте запрос на бесплатную консультацию
+        </h3>
+        <h4>
+          Наш специалист свяжется с вами, чтобы уточнить дату и время встречи
+        </h4>
+        <p>Ваша почта <span>*</span></p>
+        <input type="email" name="email" placeholder="Укажите почту" required maxlength="30" class="input">
+        <p>Ваше имя<span>*</span></p>
+        <input type="text" name="name" placeholder="Как вас зовут?" required maxlength="15" class="input">
+        <p>Вопрос<span>*</span></p>
+        <input type="text" name="question" placeholder="По какому вопросу вы хотите получить консультацию" required maxlength="15" class="input">
+        <input type="submit" value="Отправить" name="send" class="btn">
+      </form>
+
+    </section>
+
+  </div>
+
+  <section class="services">
+
+    <h1 class="heading">Наши направления деятельности</h1>
+
+    <div class="box-container">
+      <div>
+        <div id="services-btn-one" class="services-box">
+          <i class="fas fa-search"></i>
+          <div>
+            <h3>Оценка и стоимостное консультирование</h3>
+          </div>
+        </div>
+        <ul class="services-submenu-one">
+          <li>Переоценка основных средств для целей бухгалтерского
+            учета и подготовки финансовой отчетности в
+            соответствии с требованиями РСБУ / ПБУ
+          </li>
+          <li>Оценка для целей кредитования под залог
+          </li>
+          <li>Оценка для целей страхования
+          </li>
+          <li>Оценка для принятия управленческих решений и для
+            иных целей
+          </li>
+          <li>Анализ отчетов об оценке, выполненных другими
+            оценщиками            
+          </li>
+          <li>Оценка для целей подготовки финансовой отчетности в
+            соответствии с требованиями МСФО
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div id="services-btn-two" class="services-box">
+          <i class="fas fa-line-chart"></i>
+          <div>
+            <h3>Финансовый консалтинг<br>Строительный консалтинг</h3>
+          </div>
+        </div>
+        <ul class="services-submenu-two">
+          <li>Строительный аудит, технический и плановый
+            мониторинг реализации инвестиционных строительных
+            проектов
+          </li>
+          <li>Проведение контрольно-ревизионных проверок
+          </li>
+          <li>Технический аудит
+          </li>
+          <li>Обследование и оценка состояния объектов
+            незавершенного строительства
+          </li>
+          <li>Мониторинговые исследования в строительной сфере
+          </li>
+          <li>Разработка и анализ сметной документации
+          </li>
+          <li>Финансовый операционный контроль
+          </li>
+          <li>Финансовое моделирование и бизнес планирование
+          </li>
+        </ul>
+      </div>
+        <div>
+        <div id="services-btn-three" class="services-box">
+          <i class="fas fa-comments"></i>
+          <div>
+            <h3>Сопровождение аудита</h3>
+          </div>
+        </div>
+        <ul class="services-submenu-three">
+          <li>Разработка учетной политики и методических рекомендаций
+            для целей учета
+          </li>
+          <li>Разработка контролируемой системы сбора и обработки
+            информации
+          </li>
+          <li>Подготовка отчетности по МСФО
+          </li>
+          <li>Трансформация отчетности для целей МСФО
+          </li>
+          <li>Сопровождение внешнего аудита
+          </li>
+          <li>Сопровождение сделок
+          </li>
+        </ul>
+        </div>
+    </div>
+
+  </section>
+
+  <section class="advantages1">
+    <div class="advantages-container1">
+      <div class="advantages-box1">
+        <div>
+          <h3>
+            8
+          </h3>
+          <span>лет успешной экспертной работы</span>
+        </div>
+      </div>
+      <div class="advantages-box1">
+        <div>
+          <h3>
+           5000
+          </h3>
+          <span>среднее количество экспертиз в год</span>
+        </div>
+      </div>
+      <div class="advantages-box1">
+        <div>
+          <h3>
+            2 млрд руб
+          </h3>
+          <span>суммарная цена исков в Судах РФ за последние 2 года, где мы выступали экспертами</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="advantages">
+    <div class="advantages_h">
+      <h1>Наши преимущества</h1>
+      <h2>Наша компания оказывает оценочные, экспертные и юридические услуги как в форме консультаций, так и на этапе судебного урегулирования возникших споров по всей территории РФ (более 350 экспертов). Мы владеем всеми видами компетенций для проведения независимой экспертизы, оценки, определения технического состояния объектов, величины ущерба, износа и т.д.</h2>
+    </div>
+    <div class="advantages-container">
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-1.png') }}"></a>
+          <div>
+            <h3>
+              8 лет на рынке
+            </h3>
+            <span>Все наши специалисты имеют значительный опыт экспертной работы.</span>
+          </div>
+        </div>
+      </div>
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-2.png') }}"></a>
+          <div>
+            <h3>
+              Воплощаем идеи в жизнь
+            </h3>
+            <span>Профессиональный взгляд на поставленные задачи любой сложности.</span>
+          </div>
+        </div>
+      </div>
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-3.png') }}"></a>
+          <div>
+            <h3>
+              Персональный подход
+            </h3>
+            <span>Индивидуальная работа с каждым клиентом позволяет решать самые сложные задачи. Юридическое сопровождение.</span>
+          </div>
+       </div>
+      </div>
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-4.png') }}"></a>
+          <div>
+            <h3>
+              Мы на связи 24/7
+            </h3>
+            <span>Оперативно рассмотрим любые задачи и волпросы</span>
+          </div>
+        </div>
+      </div>
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-5.png') }}"></a>
+          <div>
+            <h3>
+              Эффективность
+            </h3>
+            <span>Высокопрофессиональные качественные отчеты, принимаемые рынком и Судами.</span>
+          </div>
+        </div>
+      </div>
+      <div class="advantages-box">
+        <div>
+          <img src="{{ url_for('static', filename='images/advantages-pic-6.png') }}"></a>
+          <div>
+            <h3>
+              Выгода
+            </h3>
+            <span>Прозрачные цены на стандартные услуги -
+              Вы всегда знаете, за что платите.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+
+    <section class="grid">
+
+      <div class="box">
+        <h3>Быстрые ссылки</h3>
+        <a href="home.html"><i class="fas fa-angle-right"></i>Главная страница</a>
+        <a href="services.html"><i class="fas fa-angle-right"></i>Услуги</a>
+        <a href="prices.html"><i class="fas fa-angle-right"></i>Цены</a>
+        <a href="contacts.html"><i class="fas fa-angle-right"></i>Контакты</a>
+      </div>
+
+      <div class="box">
+        <h3>Дополнительные ссылки</h3>
+        <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
+        <a href="{{ url_for('static', filename='login.html') }}" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="{{ url_for('static', filename='register.html') }}" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="{{ url_for('static', filename='about.html') }}"><i class="fas fa-angle-right"></i>О нас</a> 
+      </div>
+      
+      <div class="box">
+        <h3>Время работы</h3>
+        <text>Прием заявок: Круглосуточно</text><br>
+        <text>Работа офиса: ПН-ПТ: с 09:00 до 19:00</text>
+      </div>
+
+      <div class="box">
+        <h3>Адрес офиса</h3>
+        <text>Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</text>
+      </div>
+
+      <div class="box">
+        <h3>Контакты для связи</h3>
+        <text>Телефон: +7 (495) 662-99-67 (доб.9010)</text><br>
+        <text>Телефон: +7 (926) 111-33-16</text><br>
+        <text>e-mail: ucs@ruex.su</text>
+      </div>
+    </section>
+
+    <div class="credit">&copy; Авторское право @2023 
+      <span> ООО «РусЭксперт-Сервис»</span> | Все права защищены.
+    </div>
+
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/homesubmenus.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/homecontact.js') }}"></script>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 # модуль, в котором описаны функции и соответвующие им url
 # роутинг
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from sqlalchemy import func
 
 from main import app
@@ -12,9 +12,9 @@ from utils import admin_required, confirmed_required
 # TODO добавить требование подтвержденного пользователя
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
-
 
 # @app.route('/services', methods=['GET'])
 # def get_services():
@@ -306,7 +306,7 @@ def register():
 #     return 'Password has been reset!'
 
 
-@app.route('/api/reset-password', methods=['POST']) # добавить jwt
+@app.route('/api/reset-password', methods=['POST'])  # добавить jwt
 @jwt_required()
 def reset_password():
     return funcs.reset_password()
@@ -334,3 +334,8 @@ def reset_password_token(reset_token):
 @jwt_required()
 def create_order():
     return funcs.create_order()
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+  <header class="header">
+    <section class="flex">
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+      <a href ="home.html" class="logo"> <img src="/images/logo.png"></a>
+      <a href ="home.html" class="logo"> 
+        РусЭксперт-Сервис
+      </a>
+      <nav class="navbar">
+
+        <a href="home.html">Главная страница</a>
+        <a href="services.html">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="account.html">Личный кабинет</a>
+        
+
+      </nav>
+      <div>
+        <div>
+          <button class="btn" data-path="one">Заказать звонок</button>
+        </div>
+        <div>
+          <button href="#" class="btn-services" >Оформить услугу онлайн</button>
+        </div>
+        <div>
+          <button onclick="location.href='myorders.html'" type="button" id="myorders-btn">Мои заказы</button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <div class="section-title">Связаться с нами</div>
+  
+  <section class="contact">
+
+    <div class="box-container">
+
+      <div class="box">
+
+        <i class="fas fa-phone"></i>
+        <a href="tel:74956629967">+7 (495) 662-99-67 (доб.9010)</a>
+        <a href="tel:79261113316">+7 (926) 111-33-16</a>
+
+      </div>
+
+      <div class="box">
+
+        <i class="fas fa-envelope"></i>
+        <a href="mailto:ucs@ruex.su">ucs@ruex.su</a>
+
+      </div>
+
+      <div class="box">
+
+        <i class="fas fa-map-marker-alt"></i>
+        <a href=https://yandex.ru/maps/213/moscow/house/beregovoy_proyezd_5ak1/Z04YcwdpS0ECQFtvfXt0dHxhZw==/?ll=37.509245%2C55.755024&z=17">Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=f84f205f-a957-42fb-903e-e29d9e83b214&lang=ru_RU"></script>
+
+  <div class="section-title">Где мы находимся</div>
+
+  <section class="map">
+    <div class="map-container">
+      <div id="map" class="map-box">
+      </div>
+    </div>
+  </section>
+
+  <div class="modals-call">
+    <div class="modal-overlay">
+      <div class="modal modal--1" data-target="one">
+        <div class="modal-content">
+          <section class="body-modal">
+            <form action="" id="form" method="POST" class="form">
+              
+              <div class="row">
+                <label for="name">Ваше имя</label>
+              </div>
+              <div class="row">
+                <input type="text" name="name" placeholder="Ваше имя" class="input _req _name">
+              </div>
+              <div class="row">
+                <label for="phone">Контактный телефон:</label>
+              </div>
+              <div class="row">
+                <input type="tel" name="phone" placeholder="+7(000)000-00-00" class="input _req _tel">
+              </div>
+              <div>
+                <button type="submit" class="btn">Позвоните мне</button>
+              </div>
+              
+            </form>
+
+            <script src="/js/inputmask.min.js"></script>
+            <script src="js/phonemask.js"></script>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+
+    <section class="grid">
+
+      <div class="box">
+        <h3>Быстрые ссылки</h3>
+        <a href="home.html"><i class="fas fa-angle-right"></i>Главная страница</a>
+        <a href="services.html"><i class="fas fa-angle-right"></i>Услуги</a>
+        <a href="prices.html"><i class="fas fa-angle-right"></i>Цены</a>
+        <a href="contacts.html"><i class="fas fa-angle-right"></i>Контакты</a>
+      </div>
+
+      <div class="box">
+        <h3>Дополнительные ссылки</h3>
+        <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
+        <a href="login.html" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="register.html" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="about.html"><i class="fas fa-angle-right"></i>О нас</a>
+      </div>
+      
+      <div class="box">
+        <h3>Время работы</h3>
+        <text>Прием заявок: Круглосуточно</text><br>
+        <text>Работа офиса: ПН-ПТ: с 09:00 до 19:00</text>
+      </div>
+
+      <div class="box">
+        <h3>Адрес офиса</h3>
+        <text>Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</text>
+      </div>
+
+      <div class="box">
+        <h3>Контакты для связи</h3>
+        <text>Телефон: +7 (495) 662-99-67 (доб.9010)</text><br>
+        <text>Телефон: +7 (926) 111-33-16</text><br>
+        <text>e-mail: ucs@ruex.su</text>
+      </div>
+    </section>
+
+    <div class="credit">&copy; Авторское право @2023 
+      <span> ООО «РусЭксперт-Сервис»</span> | Все права защищены.
+    </div>
+
+  </footer>
+
+  <script src="js/scriptformap.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>

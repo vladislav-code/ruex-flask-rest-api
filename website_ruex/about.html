@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+
+  <!-- custom css file link -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+  <!-- header secrion starts -->
+
+  <header class="header">
+    <section class="flex">
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+      <a href ="home.html" class="logo"> <img src="/images/logo.png"></a>
+      <a href ="home.html" class="logo"> 
+        РусЭксперт-Сервис
+      </a>
+      <nav class="navbar">
+
+        <a href="home.html">Главная страница</a>
+        <a href="services.html">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="account.html">Личный кабинет</a>
+        
+
+      </nav>
+      <div>
+        <div>
+          <button class="btn" data-path="one">Заказать звонок</button>
+        </div>
+        <div>
+          <button href="#" class="btn-services" >Оформить услугу онлайн</button>
+        </div>
+        <div>
+          <button onclick="location.href='myorders.html'" type="button" id="myorders-btn">Мои заказы</button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+
+  <div class="modals-call">
+    <div class="modal-overlay">
+      <div class="modal modal--1" data-target="one">
+        <div class="modal-content">
+          <section class="body-modal">
+
+            <form action="" id="form" method="POST" class="form">
+              
+              <div class="row">
+                <label for="name">Ваше имя</label>
+              </div>
+              <div class="row">
+                <input type="text" name="name" placeholder="Ваше имя" class="input _req _name">
+              </div>
+              <div class="row">
+                <label for="phone">Контактный телефон:</label>
+              </div>
+              <div class="row">
+                <input type="tel" name="phone" placeholder="+7(000)000-00-00" class="input _req _tel">
+              </div>
+              <div>
+                <button type="submit" class="btn">Позвоните мне</button>
+              </div>
+              
+            </form>
+
+            <script src="/js/inputmask.min.js"></script>
+            <script src="js/phonemask.js"></script>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- header secrion starts -->
+  <div class="section-title">Почему мы лучшие в своём деле?</div>
+  <section class="about">
+
+    <img src="images/logo.png" alt="">
+    <div class="box">
+      <p>
+        Мы — профессионалы в области оценки, независимой экспертизы и урегулирования убытков любой сложности.
+Наши эксперты находятся в более чем 350 городах Российской Федерации.
+Высокий стандарт качества нашей работы позволяет решать Ваши задачи.
+На рынке с 2014 года. Более 5000 экспертиз ежегодно.
+Cуммарная цена исков за последние 2 года для нужд Судов РФ, где наша Компания выступала в
+качестве экспертов - более 2 миллиардов рублей.
+      </p>
+      <h4>
+        Нашей работе доверяют.
+      </h4>
+      <a href="contacts.html" class="btn">Связаться с нами</a>
+    </div>
+
+  </section>
+  <div class="section-title">О компании РусЭксперт-Сервис</div>
+  <section class="about">
+    <div class="box">
+      <p>
+        Мы – динамично развивающаяся компания федерального уровня, объединившая
+профессионалов на рынке экспертных и оценочных услуг. В нашем коллективе работают
+высококвалифицированные специалисты с более чем 10-летним опытом работы. Все
+штатные оценщики являются действительными членами саморегулируемых организаций
+(СРО). Оценочная деятельность осуществляется в соответствии с Законом №135-ФЗ
+от 29.07.1998 г. В нашем портфолио более 10 000 отчетов и заключений по экспертизе и
+оценке различных видов собственности.<br>
+Наша цель – оказание полного комплекса консультационных и экспертных услуг в области
+оценки и консалтинга (строительного, финансового, инвестиционного) специалистами,
+обладающими необходимыми квалификациями и значительным опытом выполнения
+подобных проектов как в России, так и за рубежом.
+РусЭксперт-Сервис – компания, объединяющая специалистов c многолетней деловой
+репутацией, значительным опытом и профессиональным кругозором.
+      </p>
+    </div>
+
+  </section>
+
+  <div class="section-title">Региональная сеть</div>
+  <section class="about">
+    <div class="box">
+      <p>
+        Региональная сеть постоянно
+расширяется и уже насчитывает
+более 350 городов и небольших
+населённых пунктов на территории
+РФ, стран СНГ и дальнего
+зарубежья.<br>
+Наша цель – оказание полного комплекса консультационных и экспертных услуг в области
+оценки и консалтинга (строительного, финансового, инвестиционного) специалистами,
+обладающими необходимыми квалификациями и значительным опытом выполнения
+подобных проектов как в России, так и за рубежом.
+РусЭксперт-Сервис – компания, объединяющая специалистов c многолетней деловой
+репутацией, значительным опытом и профессиональным кругозором.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- footer section starts -->
+
+  <footer class="footer">
+
+    <section class="grid">
+
+      <div class="box">
+        <h3>Быстрые ссылки</h3>
+        <a href="home.html"><i class="fas fa-angle-right"></i>Главная страница</a>
+        <a href="services.html"><i class="fas fa-angle-right"></i>Услуги</a>
+        <a href="prices.html"><i class="fas fa-angle-right"></i>Цены</a>
+        <a href="contacts.html"><i class="fas fa-angle-right"></i>Контакты</a>
+      </div>
+
+      <div class="box">
+        <h3>Дополнительные ссылки</h3>
+        <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
+        <a href="login.html" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="register.html" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="about.html"><i class="fas fa-angle-right"></i>О нас</a>
+      </div>
+      
+      <div class="box">
+        <h3>Время работы</h3>
+        <text>Прием заявок: Круглосуточно</text><br>
+        <text>Работа офиса: ПН-ПТ: с 09:00 до 19:00</text>
+      </div>
+
+      <div class="box">
+        <h3>Адрес офиса</h3>
+        <text>Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</text>
+      </div>
+
+      <div class="box">
+        <h3>Контакты для связи</h3>
+        <text>Телефон: +7 (495) 662-99-67 (доб.9010)</text><br>
+        <text>Телефон: +7 (926) 111-33-16</text><br>
+        <text>e-mail: ucs@ruex.su</text>
+      </div>
+    </section>
+
+    <div class="credit">&copy; Авторское право @2023 
+      <span> ООО «РусЭксперт-Сервис»</span> | Все права защищены.
+    </div>
+
+  </footer>
+
+  <!-- footer section ends -->
+
+
+
+  <!-- custom js file link -->
+  <script src="js/script.js"></script>
+
+
+</body>
+</html>

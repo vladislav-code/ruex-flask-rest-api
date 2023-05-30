@@ -1,0 +1,243 @@
+.orders-filter form{
+    height: fit-content;
+    width: 80%;
+    margin:auto;
+    background-color: var(--white);
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    border-radius: .5rem;
+    padding: 2rem;
+ }
+
+ .orders-filter form {
+    position: relative;
+ }
+
+ .orders-filter form::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #333333b7 url("../images/loading-documents.gif") center / 50px no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease 0s;
+ }
+
+ .orders-filter form._sending::after {
+    opacity: 1;
+    visibility: visible;
+ }
+
+ .orders-filter .dropdown-container .filters{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+}
+
+.orders-filter .dropdown-container .filters fieldset{
+    border: .4rem solid var(--main-color);
+    padding: 1rem;
+    width: 40rem;
+}
+
+.orders-filter .dropdown-container .filters legend{
+    font-size: 20px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    color: var(--light-color);
+}
+
+.orders-filter .dropdown-container .filters .filter{
+    flex: 1 1 20rem;
+    position: relative;
+    font-size: 25px;
+    width: 100%;
+}
+
+.orders-filter form .result-filter-container{
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.orders-filter form .result-filter-container label{
+    font-size: 3rem;
+}
+
+.orders-filter form .result-filter-container input{
+    text-align: center;
+    width: 100%;
+    border-radius: .5rem;
+    margin: 1rem 0;
+    background-color: var(--light-bg);
+    padding: 1.4rem;
+    font-size: 3.6rem;
+    color: var(--black);
+}
+
+.orders-filter form .req_doc{
+    text-align: center;
+}
+
+.orders-filter form .req_doc .req_doc_container{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+}
+
+.orders-filter form .req_doc h2{
+    margin-top: 3rem;
+    font-size: 4rem;
+}
+
+.orders-filter form .req_doc img{
+    width: 320px;
+    height: 380px;
+}
+
+.orders-filter form .req_doc label{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.orders-filter .form_label{
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.orders-filter .form-item{
+    text-align: center;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.file__item{
+    position: relative;
+    text-align: center;
+}
+
+.files__input{
+    position: absolute;
+    top: 0;
+    font-size: 0;
+    width: 137px;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file__preview {
+    display: inline-flex;
+    max-width: 800px;
+    padding: 10px 0px 0px 0px;
+}
+
+.file__preview img {
+    max-width: 100%;
+}
+
+.file_button {
+    display: inline-flex;
+    min-height: 40px;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+    background-color: #77608d;
+    padding: 0px 20px;
+    color: white;
+    font-size: 3rem;
+}
+
+.checkbox__input {
+    display: none;
+}
+
+.orders-filter .form__item .checkbox_label{
+    font-size: 2rem;
+    line-height: 140%;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.orders-filter .checkbox{
+    margin-bottom: 2rem;
+}
+
+.checkbox__input:checked + .checkbox_label::after{
+    transform: scale(1);
+}
+
+.checkbox_label::before{
+    content: "";
+    align-self: flex-start;
+    flex: 0 0 24px;
+    height: 24px;
+    background-color: var(--black);
+    border-radius: 5px;
+    margin-right: 0px 10px 0px 0px;
+    cursor: pointer;
+}
+
+.checkbox_label::after {
+    transition: transform 0.5s ease 0s;
+    content: "";
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: rgb(0, 201, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    transform: scale(0); 
+}
+
+.checkbox_label a {
+    color: var(--main-color);
+}
+
+.btnopen{
+    display: inline-block;
+    margin: .5rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 3.2rem;
+    color: var(--white);
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    text-align: center;
+    transition: .2s linear;
+    border: solid slategray;
+}
+
+.btnopen:hover{
+    color: var(--white);
+    background-color: var(--black);
+}
+
+.orders-filter form .error-message{
+    font-size: 3rem;
+    border: 2px dashed blue;
+    border-top: none;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+@media(max-width:450px){
+    .orders-filter form .req_doc img{
+        width: 240px;
+        height: 300px;
+    }
+}

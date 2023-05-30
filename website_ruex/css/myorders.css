@@ -1,0 +1,36 @@
+.myOrders-container{
+    margin-left: auto;
+    margin-right: auto;
+    width: 77%;
+    overflow-x: auto;
+    background-color:#fff;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 1rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    border: .1rem solid rgba(0,0,0,.2);
+}
+
+.orders-table{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    font-size: 24px;
+    background-color: #626694;
+    color: #fff;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.orders-table td{
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+.orders-table .table-header{
+    font-weight: bold;
+    text-align: center;
+    background-color: #3d9fc5;
+}
+

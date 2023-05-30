@@ -4,6 +4,7 @@
 # валидация данных
 # from datetime import datetime, timedelta
 import datetime
+from datetime import datetime as date
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 from utils import allowed_file
@@ -432,7 +433,7 @@ def create_order():
                 original_filename, original_ext = os.path.splitext(secure_filename(file.filename))
 
                 # Add a timestamp to the filename
-                filename = original_filename + "_" + datetime.now().strftime("%Y%m%d_%H%M%S") + original_ext
+                filename = original_filename + "_" + date.now().strftime("%Y%m%d_%H%M%S") + original_ext
 
                 # filename = secure_filename(file.filename)
                 file_path = os.path.join(order_directory, filename)

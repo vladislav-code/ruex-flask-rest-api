@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+
+  <!-- custom css file link -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+  <!-- header secrion starts -->
+
+  <header class="header">
+    <section class="flex">
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+      <a href ="home.html" class="logo"> <img src="/images/logo.png"></a>
+      <a href ="home.html" class="logo"> 
+        РусЭксперт-Сервис
+      </a>
+      <nav class="navbar">
+
+        <a href="home.html">Главная страница</a>
+        <a href="services.html">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="account.html">Личный кабинет</a>
+        
+
+      </nav>
+      <div>
+        <div>
+          <button class="btn" data-path="one">Заказать звонок</button>
+        </div>
+        <div>
+          <button href="#" class="btn-services" >Оформить услугу онлайн</button>
+        </div>
+        <div>
+          <button onclick="location.href='myorders.html'" type="button" id="myorders-btn">Мои заказы</button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <div class="modals-call">
+    <div class="modal-overlay">
+      <div class="modal modal--1" data-target="one">
+        <div class="modal-content">
+          <section class="body-modal">
+
+            <form action="" id="form" method="POST" class="form">
+              
+              <div class="row">
+                <label for="name">Ваше имя</label>
+              </div>
+              <div class="row">
+                <input type="text" name="name" placeholder="Ваше имя" class="input _req _name">
+              </div>
+              <div class="row">
+                <label for="phone">Контактный телефон:</label>
+              </div>
+              <div class="row">
+                <input type="tel" name="phone" placeholder="+7(000)000-00-00" class="input _req _tel">
+              </div>
+              <div>
+                <button type="submit" class="btn">Позвоните мне</button>
+              </div>
+      
+            </form>
+    
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- header secrion starts -->
+
+  <div class="account-in-form-container">
+
+    <section class="account-in-form">
+
+      <form action="" method="post" class="form" id="account">
+        
+        <h3>Ваши данные</h3>
+        <div class="info-container">
+          <div>
+            <div>
+              <lable for="name">Имя:</lable>
+              <input type="text" id="name" required name="name" maxlength="20" class="input">
+            </div>
+            <div>
+              <lable for="email">Почта:</lable>
+              <input type="email" id="email" required name="email" maxlength="30" class="input">
+            </div>
+          </div>
+          <div>
+            <div>
+              <lable for="phone">Номер телефона:</lable>
+              <input type="tel" id="phone" name="phone" class="input _reqAcc _tel">
+            </div>
+            <div>
+              <lable for="pass">Введите пароль для изменений:</lable>
+              <input type="password" id="password" required name="pass" maxlength="20" class="input _reqAcc _pass">
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-acc-in">Сохранить изменения</button>
+      </form>
+  
+    </section>
+
+  </div>
+
+  
+  <!-- footer section starts -->
+
+  <footer class="footer">
+
+    <section class="grid">
+
+      <div class="box">
+        <h3>Быстрые ссылки</h3>
+        <a href="home.html"><i class="fas fa-angle-right"></i>Главная страница</a>
+        <a href="services.html"><i class="fas fa-angle-right"></i>Услуги</a>
+        <a href="prices.html"><i class="fas fa-angle-right"></i>Цены</a>
+        <a href="contacts.html"><i class="fas fa-angle-right"></i>Контакты</a>
+      </div>
+
+      <div class="box">
+        <h3>Дополнительные ссылки</h3>
+        <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
+        <a href="login.html" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="register.html" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="about.html"><i class="fas fa-angle-right"></i>О нас</a>
+      </div>
+      
+      <div class="box">
+        <h3>Время работы</h3>
+        <text>Прием заявок: Круглосуточно</text><br>
+        <text>Работа офиса: ПН-ПТ: с 09:00 до 19:00</text>
+      </div>
+
+      <div class="box">
+        <h3>Адрес офиса</h3>
+        <text>Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</text>
+      </div>
+
+      <div class="box">
+        <h3>Контакты для связи</h3>
+        <text>Телефон: +7 (495) 662-99-67 (доб.9010)</text><br>
+        <text>Телефон: +7 (926) 111-33-16</text><br>
+        <text>e-mail: ucs@ruex.su</text>
+      </div>
+    </section>
+
+    <div class="credit">&copy; Авторское право @2023 
+      <span> ООО «РусЭксперт-Сервис»</span> | Все права защищены.
+    </div>
+
+  </footer>
+
+  <!-- footer section ends -->
+
+
+
+  <!-- custom js file link -->
+  <script src="js/script.js"></script>
+  <script src="js/account.js"></script>
+  <script src="/js/inputmask.min.js"></script>
+  <script src="js/phonemask.js"></script>
+
+</body>
+</html>

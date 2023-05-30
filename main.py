@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 from config import DevelopmentConfig
 
-app = Flask(__name__) #
+app = Flask(__name__, template_folder='website_ruex', static_folder='website_ruex') #
 CORS(app)
 app.config.from_object(DevelopmentConfig) #
 mail = Mail(app)

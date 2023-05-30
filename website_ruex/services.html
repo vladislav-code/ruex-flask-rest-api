@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+
+  <!-- custom css file link -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+  <!-- header secrion starts -->
+
+  <header class="header">
+    <section class="flex">
+
+      <div id="menu-btn" class="fas fa-bars"></div>
+      <a href ="home.html" class="logo"> <img src="/images/logo.png"></a>
+      <a href ="home.html" class="logo"> 
+        РусЭксперт-Сервис
+      </a>
+      <nav class="navbar">
+
+        <a href="home.html">Главная страница</a>
+        <a href="services.html">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="account.html">Личный кабинет</a>
+        
+
+      </nav>
+      <div>
+        <div>
+          <button class="btn" data-path="one">Заказать звонок</button>
+        </div>
+        <div>
+          <button href="#" class="btn-services" >Оформить услугу онлайн</button>
+        </div>
+        <div>
+          <button onclick="location.href='myorders.html'" type="button" id="myorders-btn">Мои заказы</button>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- header secrion ends -->
+
+  <!-- filter all section starts -->
+
+  <section class="services-filter">
+
+    <h1 class="heading"> Фильтр услуг</h1>
+
+    <form action="" method="post">
+
+      <div class="flex">   
+
+        <div class="box">
+
+          <p>Наименование услуги</p>
+          <input id="search-input" type="text" name="title" placeholder="Какая услуга вас интересует?"
+          required maxlength="150" class="input"> 
+
+        </div>
+
+      </div>
+      
+
+      <div class="dropdown-container">
+
+        <div class="filters">
+
+          <fieldset>
+
+            <legend>Направление</legend>
+            <select id="filter-direction" class="filter">
+
+              <option value="Все">Все</option>
+              <option value="Оценка и экспертиза">Оценка и экспертиза</option>
+              <option value="Юридические услуги">Юридические услуги</option>
+              <option value="Страхование">Страхование</option>
+  
+            </select>
+
+          </fieldset>
+
+          <fieldset>
+
+            <legend>Время выполнения</legend>
+            <select id="filter-date" class="filter">
+
+              <option value="Все">Все</option>
+              <option value="по обстоятельствам">по обстоятельствам</option>
+              <option value="От 1 дня">От 1 дня</option>
+              <option value="От 2 дней">От 2 дней</option>
+              <option value="От 3 дней">От 3 дней</option>
+  
+            </select>
+
+          </fieldset>
+
+          <fieldset>
+
+            <legend>Цена</legend>
+            <select id="filter-price" class="filter">
+
+              <option value="Все">Все</option>
+              <option value="От 500">От 500</option>
+              <option value="От 1000">От 1000</option>
+              <option value="От 2500">От 2500</option>
+              <option value="От 3000">От 3000</option>
+              <option value="От 5000">От 5000</option>
+              <option value="От 15000">От 15000</option>
+              <option value="От 20000">От 20000</option>
+              <option value="От 30000">От 30000</option>
+              <option value="От 50000">От 50000</option>
+  
+            </select>
+
+          </fieldset>
+
+        </div>
+
+      </div>
+
+    </form>
+    
+  </section>
+
+  <!-- filter all section ends -->
+  
+  <!-- services all section starts -->
+
+  <secton class="servicesAll-container">
+    <h1 class="heading">РусЭксперт-Сервис предоставляет следующие услуги</h1>
+
+    <div class="box-container">
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-1.png" alt="">
+          <div>
+            <h3>Оценка рыночной стоимости объектов недвижимого имущества</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты проводят оценку стоимости жилых и 
+            коммерческих объектов на основе анализа рынка недвижимости и 
+            других факторов, включая техническое состояние объекта, его расположение и 
+            потенциал для развития. Эта услуга может быть полезна для определения цены 
+            при продаже или покупке недвижимости, получения кредита под залог, налоговой 
+            отчетности и других целей.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 1 дня</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i><span>От 2500</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-2.png" alt="">
+          <div>
+            <h3>Предстраховая экспертиза и сюрвей для целей страхования или принятия управленческих решений</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты проводят оценку рисков и потенциальных угроз для объектов недвижимости. 
+            Эта услуга может быть полезна для страховых компаний, которые хотят определить 
+            риски и установить стоимость страховки, а также для компаний, которые хотят принять 
+            управленческие решения на основе анализа состояния своих объектов.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 2 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 3000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-3.png" alt="">
+          <div>
+            <h3>Оценка оборудования (электроэнергетика, нефтегазохимия), машин и механизмов</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты проводят экспертизу технического состояния оборудования в электроэнергетике, 
+            нефтегазохимии и других отраслях промышленности. Это позволяет определить стоимость оборудования, 
+            его рыночную ценность и потенциальные риски при использовании. Эта услуга может быть полезна для компаний, 
+            которые хотят купить или продать оборудование, а также для страховых компаний, которые хотят оценить 
+            риски при страховании оборудования.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 1 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 500</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-4.png" alt="">
+          <div>
+            <h3>Оценка ущерба после залива, пожара, иных повреждений (квартиры, дома, ТМЦ, грузы, спецтехника, воздушный и водный транспорт и тд.)</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты  проводят экспертизу после залива, пожара и других повреждений имущества, 
+            включая квартиры, дома, товары, грузы, спецтехнику, воздушный и водный транспорт. 
+            Это позволяет определить стоимость ущерба, необходимую для возмещения потерь и восстановления имущества. 
+            Эта услуга может быть полезна для страховых компаний, частных лиц и компаний, которые столкнулись с повреждением имущества.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 2 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 3000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-5.png" alt="">
+          <div>
+            <h3>Независимая оценка ущерба для суда</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты проводят экспертизу имущества после случая, 
+            который стал предметом судебного разбирательства. Это позволяет определить объективную 
+            стоимость ущерба и помогает суду принять решение по делу. Эта услуга может быть полезна 
+            как для сторон, участвующих в судебном процессе, так и для самого суда.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 2 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 15000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-6.png" alt="">
+          <div>
+            <h3>Оценка упущенной выгода и перерывов в производстве</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты определяют убытки, возникшие в результате простоя 
+            производства или потери возможной прибыли. Это позволяет оценить финансовые 
+            потери и помогает компенсировать ущерб. Эта услуга может быть полезна как для предпринимателей, 
+            так и для судебных органов.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 2 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 30000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-7.png" alt="">
+          <div>
+            <h3>Консультации по бухгалтерской ответственности и финансовым рискам</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогают клиентам разобраться в правилах бухгалтерского учета и налогообложения, 
+            а также оценивают риски, связанные с финансовой деятельностью компании. Консультации позволяют избежать 
+            ошибок и минимизировать возможные финансовые потери. Эта услуга может быть полезна как для предпринимателей, 
+            так и для компаний любого размера.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 1 дней</span></p>
+          <p><i class="fas fa-search"></i><span>Оценка и экспертиза</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 1000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-8.png" alt="">
+          <div>
+            <h3>Возмещение ущерба от залива</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогают оценить ущерб, причиненный заливом, 
+            и помогают получить компенсацию от страховой компании или ответственного лица. 
+            Консультации позволяют минимизировать финансовые потери и восстановить поврежденное имущество. 
+            Эта услуга может быть полезна как для частных лиц, так и для бизнеса.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>по обстоятельствам</span></p>
+          <p><i class="fas fa-balance-scale"></i><span>Юридические услуги</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 50000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-9.png" alt="">
+          <div>
+            <h3>Возмещение ущерба от пожара</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогают оценить ущерб, причиненный пожаром, 
+            и помогают получить компенсацию от страховой компании или ответственного лица. 
+            Консультации позволяют минимизировать финансовые потери и восстановить поврежденное имущество. 
+            Эта услуга может быть полезна как для частных лиц, так и для бизнеса.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>по обстоятельствам</span></p>
+          <p><i class="fas fa-balance-scale"></i><span>Юридические услуги</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 50000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-10.png" alt="">
+          <div>
+            <h3>Юридическое сопровождение в суде до момента получения исполнительного листа и денег на счет</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогают клиентам получить правовую поддержку и защиту в судебных процессах. 
+            Наша команда предоставляет экспертные консультации, помогает составить документы и представляет 
+            интересы клиента в суде до момента получения исполнительного листа и денег на счет. 
+            Мы стремимся защитить права клиента и обеспечить максимальную компенсацию за причиненный ущерб.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>по обстоятельствам</span></p>
+          <p><i class="fas fa-balance-scale"></i><span>Юридические услуги</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 30000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-11.png" alt="">
+          <div>
+            <h3>Бухгалтерские услуги (экспертиза бухгалтерских документов, бухгалтерское обслуживание)</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты предоставляют профессиональное сопровождение Вашей бухгалтерской документации, 
+            включая налоговую отчетность, полное ведение учета и отчетности, а также помощь в 
+            подготовке документов для банковского кредитования и аудиторских проверок. 
+            Наша команда экспертов отличается высокой квалификацией и опытом работы ведения бухгалтерского учета, 
+            что позволяет нам оперативно и эффективно решать задачи наших клиентов.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 2 дней</span></p>
+          <p><i class="fas fa-balance-scale"></i><span>Юридические услуги</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 20000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-12.png" alt="">
+          <div>
+            <h3>Консультации по всем видам страхования</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогут вам разобраться во всех аспектах страхования и 
+            подобрать наиболее подходящий вариант для вашей ситуации. Благодаря профессионализму 
+            наших консультантов вы можете быть уверены в качестве полученных рекомендаций.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 1 дней</span></p>
+          <p><i class="fas fa-book"></i><span>Страхование</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 5000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-13.png" alt="">
+          <div>
+            <h3>Помощь в решении споров по страховым вопросам</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты глубоко разбираются в юридических аспектах и могут помочь вам 
+            в спорной ситуации между вами и страховой компанией. Компания обладает большим опытом в 
+            данной сфере и гарантирует свою независимость в работе. Мы предоставляем профессиональную 
+            поддержку и сопровождение на всех этапах решения спора и стремимся к наилучшему результату для наших клиентов.
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 1 дней</span></p>
+          <p><i class="fas fa-book"></i><span>Страхование</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 3000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+      <div class="box">
+
+        <div class="service-name">
+          <img src="/images/allserv-14.png" alt="">
+          <div>
+            <h3>Подготовка претензии и судебного иска</h3>
+          </div>
+        </div>
+        <div>
+          <h3 class="services-description">Описание:</h3>
+          <p class="description"><i class="fas fa-dot-circle"></i>
+          <span>Наши специалисты помогут вам составить юридически грамотную претензию или судебный иск, 
+            с учетом особенностей конкретной ситуации. Мы гарантируем профессиональный и защищенный подход к работе, 
+            а также обеспечиваем конфиденциальность в обработке ваших данных. 
+            Надежность и качество – на нашем приоритетном месте!
+          </span></p>
+        </div>
+        <div class="tags">
+          <p><i class="fas fa-clock"></i> <span>От 3 дней</span></p>
+          <p><i class="fas fa-book"></i><span>Страхование</span></i></p>
+          <p><i class="fas fa-ruble"></i> <span>От 20000</span></i></p>
+        </div>
+        <div class="flex-btn">
+          <a href="order-online.html" class="btn">Оформить онлайн</a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </secton>
+
+  <div class="modals-call">
+    <div class="modal-overlay">
+      <div class="modal modal--1" data-target="one">
+        <div class="modal-content">
+          <section class="body-modal">
+            <form action="" id="form" method="POST" class="form">
+              
+              <div class="row">
+                <label for="name">Ваше имя</label>
+              </div>
+              <div class="row">
+                <input type="text" name="name" placeholder="Ваше имя" class="input _req _name">
+              </div>
+              <div class="row">
+                <label for="phone">Контактный телефон:</label>
+              </div>
+              <div class="row">
+                <input type="tel" name="phone" placeholder="+7(000)000-00-00" class="input _req _tel">
+              </div>
+              <div>
+                <button type="submit" class="btn">Позвоните мне</button>
+              </div>
+              
+            </form>
+
+            <script src="/js/inputmask.min.js"></script>
+            <script src="js/phonemask.js"></script>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- services all section ends -->
+
+  <!-- footer section starts -->
+
+  <footer class="footer">
+
+    <section class="grid">
+
+      <div class="box">
+        <h3>Быстрые ссылки</h3>
+        <a href="home.html"><i class="fas fa-angle-right"></i>Главная страница</a>
+        <a href="services.html"><i class="fas fa-angle-right"></i>Услуги</a>
+        <a href="prices.html"><i class="fas fa-angle-right"></i>Цены</a>
+        <a href="contacts.html"><i class="fas fa-angle-right"></i>Контакты</a>
+      </div>
+
+      <div class="box">
+        <h3>Дополнительные ссылки</h3>
+        <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
+        <a href="login.html" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="register.html" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="about.html"><i class="fas fa-angle-right"></i>О нас</a>
+      </div>
+      
+      <div class="box">
+        <h3>Время работы</h3>
+        <text>Прием заявок: Круглосуточно</text><br>
+        <text>Работа офиса: ПН-ПТ: с 09:00 до 19:00</text>
+      </div>
+
+      <div class="box">
+        <h3>Адрес офиса</h3>
+        <text>Береговой проезд 5Ак1 БЦ "Фили Град" Москва, Россия, 121087</text>
+      </div>
+
+      <div class="box">
+        <h3>Контакты для связи</h3>
+        <text>Телефон: +7 (495) 662-99-67 (доб.9010)</text><br>
+        <text>Телефон: +7 (926) 111-33-16</text><br>
+        <text>e-mail: ucs@ruex.su</text>
+      </div>
+    </section>
+
+    <div class="credit">&copy; Авторское право @2023 
+      <span> ООО «РусЭксперт-Сервис»</span> | Все права защищены.
+    </div>
+
+  </footer>
+
+  <!-- footer section ends -->
+
+  <!-- custom js file link -->
+  <script src="js/script.js"></script>
+
+  <script src="js/scriptfilter.js"></script>
+    
+
+  
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+.tables .tableonecontent{
+    text-align: center;
+    overflow-x: auto;
+}
+
+.tables .tabletwocontent{
+    text-align: center;
+    overflow-x: auto;
+}
+
+#services-table{
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    background-color: #626694;
+    color: #fff;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+#services-table td{
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+#services-table .table-header{
+    font-weight: bold;
+    text-align: center;
+    background-color: #3d9fc5;
+}
+
+#services-tabletwo{
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    background-color: #626694;
+    color: #fff;
+    border-collapse: collapse;
+}
+
+#services-tabletwo td{
+    padding: 10px;
+    border: 1px solid #fff;
+}
+
+#services-tabletwo .table-header{
+    font-weight: bold;
+    text-align: center;
+    background-color: #3d9fc5;
+}
+
+.tables{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tables h2{
+    font-size: 3rem;
+    margin: 1rem
+}

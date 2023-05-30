@@ -1,0 +1,1493 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root{
+    --main-color:#2980b9;
+    --red:red;
+    --light-color:#777;
+    --light-bg:#eee;
+    --black:#2c3e50;
+    --white:#fff;
+    --box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+    --border:.1rem solid rgba(0,0,0,.2);
+}
+
+*{
+    font-family: 'Roboto', cursive;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none; border: none;
+}
+
+*::selection{
+    background-color: var(--main-color);
+    color: var(--white);
+}
+
+::-webkit-scrollbar{
+    width: 1rem;
+    height: 2rem;
+}
+
+::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: var(--main-color);
+}
+
+html{
+    font-size: 50%;
+    overflow-x: hidden;
+    scroll-padding-top: 7rem;
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: var(--light-bg);
+}
+
+section{
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.heading{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 5rem;
+    color: var(--black);
+    padding: 1rem 0;
+}
+
+.btn{
+    display: inline-block;
+    margin: .5rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 3.2rem;
+    color: var(--white);
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    text-align: center;
+    transition: .2s linear;
+}
+
+.btn-services{
+    display: inline-block;
+    margin: .5rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 3.2rem;
+    color: var(--white);
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    text-align: center;
+    transition: .2s linear;
+}
+
+.btn-services:hover{
+    background-color: var(--black);
+}
+
+#myorders-btn{
+    display: inline-block;
+    margin: .5rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 3.2rem;
+    color: var(--white);
+    background-color: var(--main-color);
+    border-radius: .5rem;
+    text-align: center;
+    transition: .2s linear;
+}
+
+#myorders-btn:hover{
+    background-color: var(--black);
+}
+
+.modal-overlay{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal{
+    background-color: #fff;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal-overlay--visible{
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal--visible{
+    display: block;
+}
+
+.modals-call .modal-overlay .modal-content .body-modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modals-call .modal-overlay .modal-content .form::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(51, 51, 51, 0.9) url("../images/loading.gif") center / 50px no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease 0s;
+}
+
+.modals-call .modal-overlay .modal-content .form._sending::after{
+    opacity: 1;
+    visibility: visible;
+}
+
+.modals-call .modal-overlay .modal-content .body-modal form{
+    border-radius: .5rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.modals-call .modal-overlay .modal-content .body-modal form .input{
+    width: 100%;
+    border-radius: .5rem;
+    margin: 1rem 0;
+    background-color: var(--light-bg);
+    padding: 1.4rem;
+    font-size: 3.6rem;
+    color: var(--black);
+}
+
+.modals-call .modal-overlay .modal-content .body-modal form label{
+    font-size: 3rem;
+    color: var(--black);
+    margin-bottom: 0.2rem;
+}
+
+.modals-call .modal-overlay .modal-content .body-modal form .input._error {
+    box-shadow: 0 0 10px red;
+}
+
+.modals-call .modal-overlay .modal-content .body-modal form .error-message{
+    font-size: 3rem;
+    border: 2px dashed blue;
+    border-top: none;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.account-form-container .account-form form .input._error {
+    box-shadow: 0 0 10px red;
+}
+
+.account-form-container .account-form form .error-message{
+    font-size: 3rem;
+    border: 2px dashed blue;
+    border-top: none;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.account-in-form-container .account-in-form form .input._error {
+    box-shadow: 0 0 10px red;
+}
+
+.account-in-form-container .account-in-form form .error-message{
+    font-size: 3rem;
+    border: 2px dashed blue;
+    border-top: none;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.js-validate-error-label{
+    font-size: 18px;
+}
+
+.btn:hover{
+    background-color: var(--black);
+}
+
+.flex-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.header{
+    position: sticky;
+    top: 0; left: 0; right: 0;
+    background-color: var(--white);
+    box-shadow: var(--box-shadow);
+    z-index: 1000;
+}
+
+.header .flex{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.header .flex button{
+    width: 45rem;
+}
+
+#menu-btn{
+    font-size: 2.7rem;
+    color: var(--black);
+    cursor: pointer;
+    display: none;
+}
+
+.header .flex .logo{
+    font-size: 6.2rem;
+    color: var(--black);
+    justify-content: center;
+}
+
+.header .flex img{
+    width: 140px;
+}
+
+.header .flex .logo i{
+    margin-right: .5rem;
+    color: var(--light-color);
+}
+
+.header .flex .navbar a{
+    display: inline-block;
+    padding: .1rem 1.5rem;
+    font-size: 3.2rem;
+    color: var(--light-color);
+    transition: .2s linear;
+}
+
+.header .flex .navbar a:hover{
+    background-color: var(--main-color);
+    color: var(--white);
+}
+
+.home-container-about{
+    background: url('../images/home-bg.png'), rgba(93, 93, 93, 0.7) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: color;
+}
+
+.home-container-about .heading1{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 5vw;
+    color: var(--white);
+    padding: 1rem 0;
+    font-family: Georgia;
+}
+
+.home-container-about .heading2{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'TildaSans',Arial,sans-serif;
+    font-weight: 300;
+    font-size: calc(10px + 1vw);
+    color: var(--white);
+    padding: 1rem 0;
+}
+
+.home-container{
+    background: url('../images/home-bg.png'), rgba(93, 93, 93, 0.7) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: color;
+}
+
+.home-container .home{
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-container .home form{
+    background-color: var(--white);
+    width: 120rem;
+    height: 68rem;
+    border-radius: .5rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.home-container .home form h3{
+    font-size: 5rem;
+    color: var(--black);
+    margin-bottom: 0.2rem;
+}
+
+.home-container .home form h4{
+    font-size: 3rem;
+    color: var(--light-color);
+    margin-bottom: 1rem;
+}
+
+.home-container .home form p{
+    text-align: left;
+    font-size: 3rem;
+    color: var(--light-color);
+    padding-top: 1rem;
+}
+
+.home-container .home form p span{
+    color: var(--red);
+}
+
+.home-container .home form .input{
+    width: 100%;
+    border-radius: .5rem;
+    margin: 1rem 0;
+    background-color: var(--light-bg);
+    padding: 1.4rem;
+    font-size: 3.6rem;
+    color: var(--black);
+}
+
+.home-container .home form::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #333333b7 url("../images/loading-documents.gif") center / 50px no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease 0s;
+ }
+
+ .home-container .home form._sending::after {
+    opacity: 1;
+    visibility: visible;
+ }
+
+.services .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 60rem);
+    justify-content: center;
+    align-items: flex;
+    gap: 1.5rem;
+}
+
+.services .box-container .services-box{
+    justify-content: center;
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    padding: 2rem;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    transition: .3s linear;
+    cursor: pointer;
+    height: 140px;
+}
+
+.services .box-container .services-box i{
+    height: 7.5rem;
+    width: 10rem;
+    line-height: 7.5rem;
+    font-size: 5rem;
+    color: var(--black);
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    text-align: center;
+}
+
+.services .box-container .services-box h3{
+    font-size: 3rem;
+    color: var(--black);
+    padding-bottom: .5rem;
+    text-align:center;
+}
+
+.services .box-container .services-box:hover{
+    background-color: var(--black);
+
+}
+
+.services .box-container .services-box:hover h3{
+    color: var(--white);
+}
+
+.services .box-container .services-box:hover i{
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.services .box-container ul{
+    counter-reset: li; 
+    list-style: none; 
+    padding: 0;
+    text-shadow: 0 1px 0 rgba(38, 103, 255, 0.5);
+}
+
+.services .box-container ul li{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 22px;
+    position: relative;
+    display: block;
+    padding: .8em .8em .8em 3em;
+    margin: .5em 0;
+    background: #6e7ea1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: .3s ease-out;
+}
+
+.services .box-container ul li:hover{
+    background: #323e3a;
+}
+
+.services .box-container ul li:hover::before{
+    transform: rotate(360deg);
+}
+
+.services .box-container ul li::before{
+    font-size: 20px;
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: .3em;
+    top: 50%;
+    margin-top: -3.3rem;
+    background: #0346ff;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #ffffff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+
+.services .box-container .services-submenu-one{
+    max-height: 0;
+    visibility: hidden;
+    position:relative;
+    top: 0; left: 0; right: 0;
+    border-top: var(--border);
+    background-color:#d6d6d6;
+    padding: 1rem .5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: .4s linear;
+ }
+ 
+ .services .box-container .services-submenu-one.active{
+    max-height: 1800px;
+    visibility: visible;
+    transition: .3s linear;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border-radius: 1em;
+ }
+
+ .services .box-container .services-submenu-two{
+    max-height: 0px;
+    visibility: hidden;
+    position:relative;
+    top: 0; left: 0; right: 0;
+    border-top: var(--border);
+    background-color:#d6d6d6;
+    padding: 1rem .5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: .4s linear;
+ }
+ 
+ .services .box-container .services-submenu-two.active{
+    max-height: 1800px;
+    visibility: visible;
+    transition: .3s linear;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border-radius: 1em;
+ }
+
+ .services .box-container .services-submenu-three{
+    max-height: 0px;
+    visibility: hidden;
+    position:relative;
+    top: 0; left: 0; right: 0;
+    border-top: var(--border);
+    background-color:#d6d6d6;
+    padding: 1rem .5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: .4s linear;
+ }
+ 
+ .services .box-container .services-submenu-three.active{
+    max-height: 1800px;
+    visibility: visible;
+    transition: .3s linear;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border-radius: 1em;
+ }
+
+ .servicesAll-container .heading{
+    margin-top: 2rem;
+ }
+
+ .servicesAll-container .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 60rem);
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+    align-items: stretch
+ }
+
+ .servicesAll-container .box-container .box{
+    display: grid;
+    align-content: space-between;
+    justify-items: center;
+    background-color: var(--white);
+    border-radius: 2rem;
+    border: var(--border);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    overflow-x: hidden;
+    margin-bottom: 1rem;
+ }
+
+ .servicesAll-container .box-container .box .service-name{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+ }
+
+ .servicesAll-container .box-container .box .service-name img{
+    height: 25rem;
+    width: 25rem;
+    object-fit: contain;
+ }
+
+ .servicesAll-container .box-container .box .service-name h3{
+    font-size: 3.2rem;
+    color: var(--black);
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    padding-bottom: .5rem;
+ }
+
+ .servicesAll-container .box-container .box .services-description{
+    padding: .7rem 0;
+    font-size: 2.5rem;
+    color: var(--black);
+ }
+
+ .servicesAll-container .box-container .box .description{
+    margin-right: .5rem;
+    color: var(--light-color);
+    font-size: 2rem;
+ }
+
+ .servicesAll-container .box-container .box .description i{
+    margin-right: .3rem;
+    color: var(--main-color);
+ }
+
+ .servicesAll-container .box-container .box .tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.5rem 0;
+ }
+
+ .servicesAll-container .box-container .box .tags p{
+    padding: 1.1rem;
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    font-size: 3.6rem;
+    color: var(--light-color);
+ }
+
+ .servicesAll-container .box-container .box .tags p i{
+    margin-right: .5rem;
+    color: var(--black);
+ }
+
+ .services-filter form{
+    width: 60%;
+    margin:auto;
+    background-color: var(--white);
+    box-shadow: var(--box-shadow);
+    border: var(--border);
+    border-radius: .5rem;
+    padding: 2rem;
+ }
+
+ .services-filter form .flex{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+ }
+
+ .services-filter form .flex .box{
+    flex: 1 1 40rem;
+ }
+
+ .services-filter form .flex .box p{
+    font-size: 3.4rem;
+    color: var(--light-color);
+ }
+
+ .services-filter form .flex .box .input{
+    width: 100%;
+    border-radius: .5rem;
+    padding: 1.4rem;
+    color: var(--black);
+    margin: 1rem 0;
+    background-color: var(--light-bg);
+    font-size: 2.8rem;
+ }
+
+.dropdown-container .filters{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-around;
+}
+
+.dropdown-container .filters fieldset{
+    border: .4rem solid var(--main-color);
+    padding: 1rem;
+    width: 40rem;
+}
+
+.dropdown-container .filters legend{
+    font-size: 20px;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    color: var(--light-color);
+}
+
+.dropdown-container .filters .filter{
+    
+    flex: 1 1 20rem;
+    position: relative;
+    font-size: 25px;
+    width: 100%;
+}
+
+ .section-title{
+    border-top: 1rem solid var(--main-color);
+    border-bottom: 1rem solid var(--main-color);
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding: 6rem 2rem;
+    font-size: 5rem;
+ }
+
+ .about{
+    background-color: var(--white);
+ }
+
+ .about img{
+    margin: auto;
+    display: block;
+    width: 450px;
+    margin-bottom: 1.5rem;
+ }
+
+ .about .box{
+    margin: auto;
+    width: 70%;
+    text-align: center;
+    background-color: var(--white);
+    border-radius: 2rem;
+    border: var(--border);
+    padding: 3rem 2rem;
+    box-shadow: var(--box-shadow);
+ }
+
+ .about .box h3{
+    text-align: justify;
+    font-size: 5rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+ }
+
+ .about .box p{
+    padding: 1 rem 0;
+    line-height: 1.8;
+    color: var(--light-color);
+    font-size: 3.2rem;
+ }
+
+ .about .box h4{
+    padding: 1 rem 0;
+    line-height: 1.8;
+    color: var(--black);
+    font-size: 4.2rem;
+ }
+
+ .about .btn{
+    font-size: 3.5rem;
+ }
+
+ .advantages1 .advantages-container1{
+    height: 550px;
+    display: grid;
+    grid-template-columns: repeat(3, 45rem);
+    justify-content:center;
+    align-items: flex;
+    gap: 1.5rem;
+ }
+
+ .advantages1 .advantages-container1 .advantages-box1{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 2rem;
+ }
+
+ .advantages1 .advantages-container1 .advantages-box1 h3{
+    font-size: 6rem;
+    color:var(--white);
+    padding-bottom: .5rem;
+ }
+
+ .advantages1 .advantages-container1 .advantages-box1 span{
+    font-size: 3rem;
+    color:var(--white);
+    padding-bottom: .4rem;
+    font-weight: lighter;
+ }
+ 
+ .advantages1{
+    background: url('../images/advantages-bg.png'), rgba(11, 0, 0, 0.7) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment:local;
+    background-blend-mode: color;
+}
+
+.advantages .advantages_h {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--black);
+    padding: none;
+}
+
+.advantages .advantages_h h2{
+    margin: 0 auto;
+    text-align: justify;
+    font-size: 2.5rem;
+    width: 700px;
+}
+
+ .advantages h1{
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+ .advantages .advantages-container{
+    display: grid;
+    grid-template-columns: repeat(3, 45rem);
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;
+ }
+
+ .advantages .advantages-container .advantages-box{
+    border-radius: 4rem;
+    height: 350px;
+    box-shadow: var(--box-shadow);
+    border:var(--border);
+    padding: 2rem;
+    background:  var(--white);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+ }
+
+ .advantages .advantages-container .advantages-box img{
+    width: 150px;
+    height: auto;
+ }
+
+ .advantages .advantages-container .advantages-box h3{
+    font-size: 4rem;
+    color:var(--black);
+    padding-bottom: .5rem;
+ }
+
+ .advantages .advantages-container .advantages-box span{
+    font-size: 2.5rem;
+    color:var(--black);
+    padding-bottom: .4rem;
+ }
+
+
+ .contact .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 65rem);
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+    align-items: stretch
+ }
+
+ .contact .box-container .box{
+    background-color: var(--white);
+    border: var(--border);
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    padding: 3rem 2rem;
+    text-align: center;
+ }
+
+ .contact .box-container .box i{
+    height: 8.5rem;
+    width: 8.5rem;
+    line-height: 8.5rem;
+    font-size: 5rem;
+    color: var(--white);
+    background-color: var(--black);
+    border-radius: .5rem;
+    margin-bottom: 2rem;
+ }
+
+ .contact .box-container .box a{
+    display: block;
+    padding-top: .5rem;
+    font-size: 3.6rem;
+    color: var(--light-color);
+    line-height: 1.5;
+ }
+
+ 
+
+ .map .map-container{
+    display: flex;
+    justify-content: center;
+ }
+
+ .map .map-container .map-box{
+    width: 1500px;
+    height: 1000px;
+    background-color: var(--black);
+ }
+
+ .account-form-container{
+    background: url('../images/home-bg.png'), rgba(40, 40, 40, 0.7) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: color;
+ }
+
+ .account-form-container .account-form{
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .account-form-container .account-form form{
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    width: 80rem;
+ }
+
+ .account-form-container .account-form form h3{
+    font-size: 4.5rem;
+    color: var(--black);
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+ }
+
+ .account-form-container .account-form form .input{
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 3.8rem;
+    padding: 1.4rem;
+    background-color: var(--light-bg);
+    border-radius: .5rem;
+ }
+
+ .account-form-container .account-form form p{
+    padding: 1rem 0;
+    font-size: 2.6rem;
+    color: var(--light-color);
+ }
+
+ .account-form-container .account-form form p a{
+    color: var(--main-color);
+ }
+
+ .account-form-container .account-form form p a:hover{
+    color: var(--black);
+    text-decoration: underline;
+ }
+
+ .account-form-container .account-form form .passInf{
+    font-size: 2rem;
+ }
+
+ .account-in-form-container{
+    background: url('../images/home-bg.png'), rgba(40, 40, 40, 0.7) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: color;
+ }
+
+ .account-in-form-container .account-in-form{
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .account-in-form-container .account-in-form .form{
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding: 3rem 2rem;
+    text-align: center;
+ }
+
+ .account-in-form-container .account-in-form .form .info-container{
+    display: flex;
+    flex-direction: column;
+ }
+
+ .account-in-form-container .account-in-form form h3{
+    font-size: 4.5rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+ }
+
+ .account-in-form-container .account-in-form form lable{
+
+    font-size: 2.5rem;
+    color: var(--light-color);
+    
+    margin-bottom: 1rem;
+ }
+
+ .account-in-form-container .account-in-form form .input{
+    width: 100%;
+    margin: 1rem 0;
+    font-size: 3.8rem;
+    padding: 1.4rem;
+    background-color: var(--light-bg);
+    border-radius: .5rem;
+ }
+
+ .btn-acc-in{
+    display: inline-block;
+    margin: .5rem;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    font-size: 3.2rem;
+    color: var(--white);
+    background-color: var(--main-color);
+    border-radius: 4rem;
+    text-align: center;
+    transition: .2s linear;
+ }
+
+ .btn-acc-in:hover{
+    background-color: var(--black);
+}
+
+.footer .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50rem);
+    gap: 1.5rem;
+    justify-content: center;
+    background-color: var(--black);
+    align-items:flex-start;
+}
+
+.footer .grid .box h3{
+    font-size: 4rem;
+    color: var(--white);
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+}
+
+.footer .grid .box a{
+    display: block;
+    padding: 1.5rem 0;
+    font-size: 3rem;
+    color: var(--white);
+}
+
+.footer .grid .box a i{
+    color: var(--main-color);
+    margin-right: .8rem;
+    transition: .2s linear;
+}
+
+.footer .grid .box a:hover i{
+    margin-right: 2rem;
+}
+
+.footer .grid .box button{
+    display: block;
+    padding: 1.5rem 0;
+    font-size: 3rem;
+    color: var(--white);
+    background-color: var(--black);
+}
+
+.footer .grid .box button i{
+    color: var(--main-color);
+    margin-right: .8rem;
+    transition: .2s linear;
+    background-color: var(--black);
+}
+
+.footer .grid .box button:hover i{
+    margin-right: 2rem;
+}
+
+.footer .grid .box text{
+    display: block;
+    padding: 0rem 0;
+    font-size: 3rem;
+    color: var(--white);
+}
+
+.footer .credit{
+    text-align: center;
+    padding: 2rem;
+    border-top: var(--border);
+    background-color: var(--white);
+    font-size: 3rem;
+    color: var(--light-color);
+    line-height: 1.5;
+}
+
+.footer .credit span{
+     color: var(--main-color);
+}
+
+.footer #login-btn.hidden{
+    display: none;
+}
+
+.footer #register-btn.hidden{
+    display: none;
+}
+
+
+/* media queries */
+
+@media(max-width:1150px){
+
+    .header .flex button{
+        width: 35rem;
+    }
+    
+    .header .flex .logo{
+        font-size: 3.2rem;
+    }
+    
+    .header .flex img{
+        width: 70px;
+    }
+
+    .advantages1 .advantages-container1{
+        grid-template-columns: repeat(1, 50rem);
+    }
+    
+     .advantages .advantages-container{
+        grid-template-columns: repeat(2, 40rem);
+     }
+    
+     .advantages .advantages-container .advantages-box{
+        height: 350px;
+     }
+    
+     .advantages .advantages-container .advantages-box img{
+        width: 150px;
+        height: auto;
+     }
+    
+     .advantages .advantages-container .advantages-box h3{
+        font-size: 3rem;
+     }
+    
+     .advantages .advantages-container .advantages-box span{
+        font-size: 2rem;
+     }
+}
+
+@media(max-width:991px){
+
+    html{
+        font-size:55%;
+    }
+
+    .section-title{
+        font-size: 5rem;
+    }
+
+    .home-container .home form{
+        width: 120rem;
+        height: 54rem;
+    }
+    
+    .home-container .home form h3{
+        font-size: 2.4rem;
+    }
+    
+    .home-container .home form h4{
+        font-size: 2rem;
+    }
+    
+    .home-container .home form p{
+        text-align: left;
+        font-size: 2.2rem;
+    }
+    
+    .home-container .home form .input{
+        font-size: 1.6rem;
+    }
+}
+
+@media(max-width:800px){
+
+    #menu-btn{
+        display: inline-block;
+        margin: 2rem;
+    }
+
+    .btn-services{
+        font-size: 1.6rem;
+    }
+
+    #myorders-btn{
+        font-size: 1.6rem;
+    }
+
+    .about img{
+        width: 300px;
+    }
+
+    .header .btn{
+        font-size: 1.6rem;
+    }
+
+    .flex-btn .btn{
+        font-size: 3rem;
+    }
+
+    .header .flex button{
+        width: 25rem;
+    }
+    
+    .header .flex .navbar{
+        position: absolute;
+        top: 99%; left: 0; right: 0;
+        border-top: var(--border);
+        background-color: var(--white);
+        padding: 1rem .5rem;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: .2s linear;
+    }
+
+    .header .flex .navbar.active{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .header .flex .navbar a{
+        display: block;
+        padding: 1.5rem 2rem;
+    }
+
+    .services .box-container{
+        grid-template-columns: repeat(auto-fit, 50rem);
+    }
+
+    .services .box-container .box{
+        flex-flow: column;
+        text-align: center;
+    }
+
+    .advantages .advantages_h h2{
+        margin: 0 auto;
+        text-align: center;
+        width: 70%;
+    }
+
+    .advantages .advantages-container{
+        grid-template-columns: repeat(auto-fit, 35rem);
+    }
+
+    .advantages1 .advantages-container1{
+        grid-template-columns: repeat(1, 50rem);
+    }
+    
+    .advantages .advantages_h h2{
+        font-size: 26px;
+        width: 420px;
+    }
+    
+     .advantages h1{
+        font-size: 4rem;
+    }
+
+    .section-title{
+        font-size: 4rem;
+    }
+
+    .contact .box-container{
+        grid-template-columns: repeat(auto-fit, 30rem);
+     }
+    
+     .contact .box-container .box i{
+        height: 4.5rem;
+        width: 4.5rem;
+        line-height: 4.5rem;
+        font-size: 2rem;
+     }
+    
+     .contact .box-container .box a{
+        font-size: 1.6rem;
+     }
+}
+
+
+
+@media(max-width:550px){
+
+    .about img{
+        width: 200px;
+    }
+
+    .header .flex button{
+        width: 14rem;
+    }
+
+    .about .box p{
+        font-size: 1.4rem;
+    }
+
+    .about .box h4{
+        font-size: 1.6rem;
+    }
+
+    .about .box .btn{
+        font-size: 2rem;
+    }
+
+    .servicesAll-container .box-container{
+        grid-template-columns: repeat(auto-fit, 38rem);
+     }
+
+     .servicesAll-container .box-container .box .service-name img{
+        height: 13rem;
+        width: 13rem;
+     }
+
+     .servicesAll-container .box-container .box .service-name h3{
+        font-size: 2rem;
+     }
+
+    
+     .servicesAll-container .box-container .box .services-description{
+        font-size: 2rem;
+     }
+    
+     .servicesAll-container .box-container .box .description{
+        font-size: 2.2rem;
+     }
+    
+     .servicesAll-container .box-container .box .tags p{
+        font-size: 2rem;
+     }
+
+     .section-title{
+        font-size: 3rem;
+    }
+}
+
+@media(max-width:450px){
+
+    html{
+        font-size:50%;
+    }
+
+    .header .flex img{
+        display: none;
+    }
+
+    .section-title{
+        font-size: 2rem;
+    }
+    
+    .home-container .home form h3{
+        font-size: 2rem;
+    }
+    
+    .home-container .home form h4{
+        font-size: 2rem;
+    }
+    
+    .home-container .home form p{
+        text-align: left;
+        font-size: 1.6rem;
+    }
+    
+    .home-container .home form .input{
+        font-size: 1.6rem;
+    }
+
+    .contact .btn{
+        font-size: 2rem;
+    }
+
+    .account-in-form-container .account-in-form form h3{
+        font-size: 2.5rem;
+     }
+    
+     .account-in-form-container .account-in-form form lable{
+        font-size: 1.5rem;
+     }
+    
+     .account-in-form-container .account-in-form form .input{
+        font-size: 1.8rem;
+     }
+    
+     .btn-acc-in{
+        font-size: 2.2rem;
+     }
+
+    .services-filter form .flex .box p{
+        font-size: 2.6rem;
+    }
+
+    .services .box-container ul li{
+        font-size: 16px;
+        padding: .8em .8em .8em 3em;
+    }
+
+    .services .box-container ul li::before{
+        font-size: 15px;
+        top: 50%;
+        margin-top: -2.4rem;
+    }
+
+    .services .box-container{
+        grid-template-columns: repeat(auto-fit, 34rem);
+    }
+
+    .services .box-container .services-box i{
+        height: 6.5rem;
+        width: 7rem;
+        font-size: 2rem;
+    }
+
+    .services .box-container .services-box{
+        height: 90px;
+    }
+    
+    .services .box-container .services-box h3{
+        font-size: 2rem;
+        color: var(--black);
+        padding-bottom: .5rem;
+        text-align:center;
+    }
+
+    .advantages1 .advantages-container1{
+        grid-template-columns: repeat(1, 30rem);
+     }
+
+    .advantages1 .advantages-container1 .advantages-box1 h3{
+        font-size: 4rem;
+     }
+
+     .services .box-container ul li{
+        font-size: 16px;
+    }
+    
+     .advantages1 .advantages-container1 .advantages-box1 span{
+        font-size: 3rem;
+     }
+
+     .advantages .advantages_h h2{
+        font-size:16px;
+        width: 260px;
+    }
+    
+     .advantages h1{
+        font-size: 4rem;
+    }
+    
+    .footer .grid{
+        grid-template-columns: repeat(auto-fit, 30rem);
+    }
+
+    .footer .grid .box h3{
+        font-size: 2rem;
+    }
+    
+    .footer .grid .box a{
+        font-size: 1.6rem;
+    }
+
+    .footer .grid .box button{
+        font-size: 1.6rem;
+    }
+    
+    .footer .grid .box text{
+        font-size: 1.6rem;
+    }
+    
+    .footer .credit{
+        font-size: 1.6rem;
+    }
+}
