@@ -2,11 +2,11 @@
 # TODO данные почты в отдельный файл
 # try catch уязвимых областей
 # валидация данных
-import datetime
+from datetime import datetime
 
 from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
-
+from utils import allowed_file
 from flask_mail import Message
 from flask import request, url_for, jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity, decode_token
@@ -24,48 +24,7 @@ import os
 bcrypt = Bcrypt(app)
 
 UPLOAD_DIRECTORY = 'files/documents'  # путь к основной директории для хранения файлов
-
-
-# def register():
-#     # получаем данные пользователя из запроса
-#     email = request.json['email']
-#     password = request.json['password']
-#
-#     # Создать нового пользователя в базе данных
-#     user_id = create_user(email, password)
-#
-#     # Создать токен JWT для подтверждения регистрации
-#     token = create_access_token(identity=user_id, expires_delta=False)
-#
-#     # Отправить письмо на почту пользователя
-#     msg = Message('Подтверждение регистрации', recipients=[email])
-#     msg.body = f'Для подтверждения регистрации перейдите по ссылке: {url_for("confirm_registration", token=token, _external=True)}'
-#     mail.send(msg)
-#
-#     return {'message': 'Регистрация прошла успешно. Проверьте свою почту для подтверждения регистрации.'}, 201
-
-
-# def register():
-#     username = request.json.get('username', None)
-#     password_hash = request.json.get('password', None)  # добавить хэш функцию
-#
-#     if not username or not password_hash:
-#         return jsonify({'msg': 'Username or password is missing'}), 400
-#
-#     # проверка, существует ли пользователь
-#     user = User.query.filter_by(username=username).first()
-#     if user:
-#         return jsonify({'msg': 'User already exists'}), 400
-#
-#     # email = request.json.get('email', None)
-#     # Получаем первый свободный id
-#     first_free_id = db.session.query(func.min(User.id + 1)). \
-#         filter(~User.id.in_(db.session.query(User.id)))
-#     new_user = User(id=first_free_id, username=username, password_hash=password_hash)
-#
-#     db.session.add(new_user)
-#     db.session.commit()
-#     return jsonify({'message': 'User created successfully'}), 201
+MAX_FILE_SIZE = 15 * 1024 * 1024  # 15 MB in bytes
 
 
 def login():
@@ -83,11 +42,6 @@ def login():
 
 def handle_user():
     user_id = get_jwt_identity()
-    current_user = User.query.get(user_id)
-
-    # if not current_user.is_admin:
-    #     return jsonify(message="Not authorized"), 403
-
     user = User.query.get(user_id)
 
     if request.method == 'GET':
@@ -131,32 +85,14 @@ def get_services():
 
 
 def get_user_orders():
-    # user_id = get_jwt_identity()
-    # # if current_user_id != user_id:
-    # #     return jsonify({"msg": "Unauthorized access"}), 403
-    #
-    # orders = Order.query.filter_by(client_id=user_id).all()
-    # orders_list = []
-    # for order in orders:
-    #     order_data = {
-    #         'id': order.id,
-    #         'client_id': order.client_id,
-    #         'service_id': order.service_id,
-    #         'order_date': order.order_date,
-    #         'status': order.status
-    #     }
-    #     orders_list.append(order_data)
-    # return jsonify(orders_list), 200
     user_id = get_jwt_identity()
+
     orders = db.session.query(Order, Service).join(Service, Order.service_id == Service.id).filter(Order.client_id == user_id).all()
     orders_list = []
-    # TODO убрать id и заменить client_id на данные клиента
+
     for order, service in orders:
         order_data = {
-            'id': order.id, ###
-            'client_id': order.client_id, ###
             'service': {
-                'id': service.id, ###
                 'direction': service.direction,
                 'type': service.type,
                 'details': service.details,
@@ -171,44 +107,24 @@ def get_user_orders():
     return jsonify(orders_list), 200
 
 
-# def create_order():
-#     user_id = get_jwt_identity()
-#     data = request.get_json()
-#
-#     if 'direction' not in data or 'type' not in data or 'details' not in data or 'specific' not in data or 'price' not in data or 'execution_time' not in data:
-#         return jsonify({"msg": "Missing service parameters"}), 400
-#
-#     service = Service.query.filter_by(direction=data['direction'], type=data['type'], details=data['details'],
-#                                       specific=data['specific'], price=data['price'],
-#                                       execution_time=data['execution_time']).first()
-#     if service is None:
-#         return jsonify({"msg": "Service not found"}), 404
-#
-#     new_order = Order(
-#         client_id=user_id,
-#         service_id=service.id,
-#         status='Принят'
-#     )
-#
-#     db.session.add(new_order)
-#     try:
-#         db.session.commit()
-#     except SQLAlchemyError as e:
-#         return jsonify({"msg": "Database error occurred. " + str(e)}), 500
-#
-#     return jsonify({"msg": "Order created successfully!"}), 201
-
-
 def get_admin_orders():
-
-    orders = Order.query.all()
+    orders = db.session.query(Order, Service, User).join(Service, Order.service_id == Service.id).join(User, Order.client_id == User.id).all()
     orders_list = []
-    for order in orders:
+
+    for order, service, user in orders:
         order_data = {
-            'id': order.id,
-            'client_id': order.client_id,
-            'service_id': order.service_id,
-            'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'), # проверить как лучше в сравнии выше
+            'client': {
+                'username': user.username
+            },
+            'service': {
+                'direction': service.direction,
+                'type': service.type,
+                'details': service.details,
+                'specific': service.specific,
+                'price': service.price,
+                'execution_time': service.execution_time
+            },
+            'order_date': order.order_date.strftime('%Y-%m-%d %H:%M:%S'),
             'status': order.status
         }
         orders_list.append(order_data)
@@ -471,29 +387,73 @@ def create_order():
     except SQLAlchemyError as e:
         return jsonify({"msg": "Database error occurred. " + str(e)}), 500
 
-        # Handle file upload
+    #     # Handle file upload
+    # if 'file' in request.files:
+    #     file = request.files['file']
+    #     if file and allowed_file(file.filename):
+    #         order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
+    #
+    #         if not os.path.exists(order_directory):
+    #             os.makedirs(order_directory)
+    #
+    #         filename = secure_filename(file.filename)
+    #         file_path = os.path.join(order_directory, filename)
+    #         file.save(file_path)
+    #
+    #         # Save the file_path in your database
+    #         new_document = Document(
+    #             name=filename,
+    #             file_path=file_path,
+    #             order_id=new_order.id
+    #         )
+    #         db.session.add(new_document)
+    #         try:
+    #             db.session.commit()
+    #         except SQLAlchemyError as e:
+    #             return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
+    #
+    # return jsonify({"msg": "Order created successfully!"}), 201
+
+    # TODO Проверить
+    # Handle file upload
     if 'file' in request.files:
         file = request.files['file']
-        if file:
-            order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
-
-            if not os.path.exists(order_directory):
-                os.makedirs(order_directory)
-
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(order_directory, filename)
-            file.save(file_path)
-
-            # Save the file_path in your database
-            new_document = Document(
-                name=filename,
-                file_path=file_path,
-                order_id=new_order.id
-            )
-            db.session.add(new_document)
+        if file and allowed_file(file.filename):
+            if len(file.read()) > MAX_FILE_SIZE:
+                return jsonify({"msg": "File size exceeds the maximum limit of 15MB"}), 400
             try:
-                db.session.commit()
-            except SQLAlchemyError as e:
-                return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
+                file.seek(0)  # Reset file cursor to start
+                order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
+
+                if not os.path.exists(order_directory):
+                    os.makedirs(order_directory)
+
+                # Get the original filename, split by extension
+                original_filename, original_ext = os.path.splitext(secure_filename(file.filename))
+
+                # Add a timestamp to the filename
+                filename = original_filename + "_" + datetime.now().strftime("%Y%m%d_%H%M%S") + original_ext
+
+                # filename = secure_filename(file.filename)
+                file_path = os.path.join(order_directory, filename)
+                file.save(file_path)
+
+                # Save the file_path in your database
+                new_document = Document(
+                    name=filename,
+                    file_path=file_path,
+                    order_id=new_order.id
+                )
+                db.session.add(new_document)
+                try:
+                    db.session.commit()
+                except SQLAlchemyError as e:
+                    return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
+
+            except Exception as e:
+                return jsonify({"msg": "Error occurred while saving file. " + str(e)}), 500
+
+        else:
+            return jsonify({"msg": "Invalid file type. Only .pdf, .jpg, .jpeg, .png, .gif files are allowed."}), 400
 
     return jsonify({"msg": "Order created successfully!"}), 201

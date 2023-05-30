@@ -1,7 +1,12 @@
+import shutil
 from datetime import datetime
+
+from sqlalchemy import event
+
 from main import app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
 # вынести создание бд в этот модуль
 
@@ -32,6 +37,8 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     email_confirmed = db.Column(db.Boolean, default=False)
 
+    orders = db.relationship('Order', backref='client', lazy=True, cascade='all, delete-orphan')
+
 
 class Order(db.Model):
     __tablename__ = 'orders'
@@ -42,6 +49,8 @@ class Order(db.Model):
     order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     status = db.Column(db.String(80), nullable=False)
     # services = db.relationship('Service', secondary='order_service', backref='orders')
+
+    documents = db.relationship('Document', backref='order', lazy=True, cascade='all, delete-orphan')
 
 
 class Service(db.Model):
@@ -55,6 +64,8 @@ class Service(db.Model):
     price = db.Column(db.Float, nullable=False)
     execution_time = db.Column(db.String(20))
 
+    orders = db.relationship('Order', backref='service', lazy=True, cascade='all, delete-orphan')
+
 
 class Document(db.Model):
     __tablename__ = 'documents'
@@ -63,6 +74,25 @@ class Document(db.Model):
     name = db.Column(db.String(255))
     file_path = db.Column(db.String(255))
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+
+    def delete(self):
+        # Удаление файла с диска
+        if os.path.isfile(self.file_path):
+            os.remove(self.file_path)
+        # Удаление записи из базы данных
+        db.session.delete(self)
+        db.session.commit()
+
+
+@event.listens_for(Document, 'before_delete')
+def delete_document_files(mapper, connection, target):
+    try:
+        order_directory = os.path.dirname(target.file_path)
+        if os.path.isdir(order_directory):
+            # Удаляем директорию и все ее содержимое
+            shutil.rmtree(order_directory)
+    except Exception as e:
+        print(f"Error deleting directory: {e}")
 
 
 # Создание контекста приложения

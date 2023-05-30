@@ -39,3 +39,11 @@ def confirmed_required(f):
 
         return f(*args, **kwargs)
     return decorated_function
+
+
+ALLOWED_EXTENSIONS = {'pdf'}
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
