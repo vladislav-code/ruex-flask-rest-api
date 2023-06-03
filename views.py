@@ -5,8 +5,7 @@ from sqlalchemy import func
 
 from main import app
 import funcs
-from models import User, Service, Order, Document, db
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import JWTManager, jwt_required
 # from flask_mail import Message
 from utils import admin_required, confirmed_required
 # TODO добавить требование подтвержденного пользователя
@@ -15,46 +14,6 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 jwt = JWTManager(app)
 bcrypt = Bcrypt(app)
-
-# @app.route('/services', methods=['GET'])
-# def get_services():
-#     services = Service.query.all()
-#     return jsonify([{'id': s.id, 'name': s.name, 'description': s.description} for s in services])
-
-
-# @app.route('/services')
-# def get_services():
-#     services = Service.query.all()
-#     result = []
-#
-#     for service in services:
-#         if isinstance(service, EvaluationService):
-#             result.append({
-#                 'id': service.id,
-#                 'name': service.name,
-#                 'type': service.type,
-#                 'description': service.description,
-#                 'object_type': service.object_type,
-#                 'evaluation_goal': service.evaluation_goal,
-#             })
-#         elif isinstance(service, OtherService):
-#             result.append({
-#                 'id': service.id,
-#                 'name': service.name,
-#                 'type': service.type,
-#                 'description': service.description,
-#                 # другие поля для этого типа услуги
-#                 # ...
-#             })
-#         else:
-#             result.append({
-#                 'id': service.id,
-#                 'name': service.name,
-#                 'type': service.type,
-#                 'description': service.description,
-#             })
-#
-#     return jsonify(result)
 
 
 # TODO хэширование пароля
@@ -113,26 +72,6 @@ bcrypt = Bcrypt(app)
 #     db.session.add(new_user)
 #     db.session.commit()
 #     return jsonify({'message': 'User created successfully'}), 201
-
-
-# подтверждение регистрации
-from flask_jwt_extended import get_jwt_identity, jwt_required
-
-
-# @app.route('/confirm-registration/<token>', methods=['GET'])
-# @jwt_required()
-# def confirm_registration(token):
-#     try:
-#         # Декодировать токен
-#         decoded_token = decode_token(token)
-#         user_id = decoded_token['identity']
-#
-#         # Пометить пользователя как подтвержденного в базе данных
-#         confirm_user(user_id)
-#
-#         return {'message': 'Регистрация подтверждена успешно.'}, 200
-#     except:
-#         return {'message': 'Ошибка при подтверждении регистрации.'}, 400
 
 
 @app.route('/api/send_mail', methods=['POST'])
@@ -210,34 +149,27 @@ def get_services():
 # TODO нужен ли /user/ в запросах пользователя
 @app.route('/api/user/orders', methods=['GET'])
 @jwt_required()
+@confirmed_required
 def get_user_orders():
     return funcs.get_user_orders()
 
 
-# @app.route('/api/user/orders', methods=['POST'])
-# @jwt_required()
-# def create_order():
-#     return funcs.create_order()
+@app.route('/api/user/orders', methods=['POST'])
+@jwt_required()
+@confirmed_required
+def create_order():
+    return funcs.create_order()
 
 
 @app.route('/api/admin/orders', methods=['GET'])
 @jwt_required()
+@confirmed_required
 @admin_required
 def get_admin_orders():
     return funcs.get_admin_orders()
 
 
-# @app.route('/payment', methods=['POST'])
-# def payment():
-#
-#     return #jsonify(services_data), 200
-#
-#
-# @app.route('/upload', methods=['POST'])
-# @jwt_required()
-# def upload():
-#
-#
+# TODO admin order
 # @app.route("/admin/order/<int:order_id>", methods=['PUT', 'DELETE'])
 # @jwt_required()
 # @admin_required()
@@ -246,6 +178,7 @@ def get_admin_orders():
 #
 @app.route("/api/admin/service/<int:service_id>", methods=['PUT', 'DELETE'])
 @jwt_required()
+@confirmed_required
 @admin_required
 def admin_service(service_id):
     return funcs.admin_service()
@@ -307,7 +240,6 @@ def register():
 
 
 @app.route('/api/reset-password', methods=['POST'])  # добавить jwt
-@jwt_required()
 def reset_password():
     return funcs.reset_password()
 
@@ -330,12 +262,7 @@ def reset_password_token(reset_token):
     return reset_password_token(reset_token)
 
 
-@app.route('/api/create_order', methods=['POST'])
-@jwt_required()
-def create_order():
-    return funcs.create_order()
-
-
+# TODO change static to Nginx
 @app.route('/', methods=['GET'])
 def home():
     return render_template('home.html')

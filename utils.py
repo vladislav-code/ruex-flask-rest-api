@@ -35,7 +35,7 @@ def confirmed_required(f):
         if user is None:
             return jsonify({"msg": "User not found"}), 404
         elif not user.email_confirmed:
-            return jsonify({"msg": "Admin access required"}), 403
+            return jsonify({"msg": "Confirm your registration using the link sent to your email"}), 403
 
         return f(*args, **kwargs)
     return decorated_function

@@ -210,12 +210,10 @@ def send_mail():
 def register():
     data = request.get_json()
 
-    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8') # сравнить с изначальным bcrypt из views
-    expires = datetime.timedelta(days=1)  # make sure to set this to a reasonable value
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    expires = datetime.timedelta(days=1)
     token = create_access_token(identity=data['email'], expires_delta=expires)
-    # создания пользователя после успешной отправки сообщения на почту
-    # сообщение на почту от небезопасного приложения
-    # распознавание как спам smtp сервером
+
     new_user = User(
         username=data['username'],
         password_hash=hashed_password,
@@ -227,60 +225,64 @@ def register():
     db.session.add(new_user)
     try:
         db.session.commit()
-    except IntegrityError:  # all fields are unique
-        return jsonify(message="User with that username or email already exists"), 400
+    except IntegrityError: # all fields are unique
+        return jsonify(message="Пользователь с таким именем или почтой уже существует"), 400
 
     confirmation_url = url_for('confirm_email', token=token, _external=True)
-    msg = Message('Confirm Email', sender=app.config['MAIL_USERNAME'], recipients=[data['email']])
-    msg.body = f'Your confirmation link is {confirmation_url}'
+    msg = Message('Подтверждение регистрации', sender=app.config['MAIL_USERNAME'], recipients=[data['email']])
+    msg.body = 'Пожалуйста, подтвердите свою регистрацию, нажав на следующую ссылку: {0}\n\nЭто сообщение сформировано автоматически, на него не нужно отвечать.'.format(
+        confirmation_url)
+    msg.html = '<p>Пожалуйста, подтвердите регистрацию, нажав на следующую ссылку: <a href="{0}">Подтвердить регистрацию</a></p><p><small>Это сообщение сформировано автоматически, на него не нужно отвечать.</small></p>'.format(
+        confirmation_url)
 
     mail.send(msg)
 
-    return jsonify(message="Confirmation email sent. Please confirm your email."), 201
+    return jsonify(message="Письмо с подтверждением отправлено. Пожалуйста, подтвердите свою регистраци.."), 201
     # return jsonify(url_for('confirm_email', token=token, _external=True)), 201
     # return jsonify(message="Confirmation email sent. Please confirm your email."), 201
 
 
 def reset_password():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    if user is None:
-        return jsonify({"msg": "User not found"}), 404
-    email = user.email
-    expires = datetime.timedelta(hours=24)  # Token will expire in 24 hours
-    token = create_access_token(identity=email, expires_delta=expires)
-    link = url_for('api_reset_password_token', reset_token=token, _external=True)
+    data = request.get_json()
+    email = data['email']
+    user = User.query.filter_by(email=email).first()
 
-    msg = Message('Password Reset Request',
+    if user is None:
+        return jsonify({"msg": "Пользователь не найден"}), 404
+    expires = datetime.timedelta(hours=24)  # Токен будет действителен 24 часа
+    token = create_access_token(identity=email, expires_delta=expires)
+    link = url_for('reset_password_token', reset_token=token, _external=True)
+
+    msg = Message('Запрос на сброс пароля',
                   sender=app.config['MAIL_USERNAME'],
                   recipients=[email])
 
     msg.html = """
     <html>
       <body>
-        <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Hello!</h1>
+        <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Здравствуйте!</h1>
         <p style="color: #355C7D; font-family: Arial, sans-serif;">
-          We received a request to reset your password. If you didn't make the request, just ignore this email. 
-          Otherwise, you can reset your password using this link:
+          Мы получили запрос на сброс вашего пароля. Если вы не делали этого запроса, просто проигнорируйте это письмо. 
+          В противном случае, вы можете сбросить свой пароль, перейдя по этой ссылке:
         </p>
         <a href="{}" style="background-color: #6C5B7B; color: #fff; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 20px 0;">
-          Click here to reset your password
+          Нажмите здесь, чтобы сбросить пароль
         </a>
-        <p style="color: #355C7D; font-family: Arial, sans-serif;">Thank you!</p>
+        <p style="color: #355C7D; font-family: Arial, sans-serif;">Спасибо!</p>
       </body>
     </html>
     """.format(link)
 
-    msg.body = 'Follow this link to reset your password: {}'.format(link)
+    msg.body = 'Следуйте этой ссылке для сброса вашего пароля: {}'.format(link)
 
     try:
         mail.send(msg)
-        print('Email sent!')
+        print('Письмо отправлено!')
     except Exception as e:
-        # Print any error messages to stdout
+        # Выводим все сообщения об ошибках в stdout
         print(e)
 
-    return 'Email sent!'
+    return 'Письмо отправлено!'
 
 
 # def reset_password():

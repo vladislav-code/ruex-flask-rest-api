@@ -1,5 +1,5 @@
 import shutil
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from sqlalchemy import event
 
@@ -46,7 +46,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
-    order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    order_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
     status = db.Column(db.String(80), nullable=False)
     # services = db.relationship('Service', secondary='order_service', backref='orders')
 
