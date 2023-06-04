@@ -114,6 +114,7 @@ def get_admin_orders():
 
     for order, service, user in orders:
         order_data = {
+            'order_id': order.id,
             'client': {
                 'username': user.username
             },
@@ -230,14 +231,15 @@ def register():
 
     confirmation_url = url_for('confirm_email', token=token, _external=True)
     msg = Message('Подтверждение регистрации', sender=app.config['MAIL_USERNAME'], recipients=[data['email']])
-    msg.body = 'Пожалуйста, подтвердите свою регистрацию, нажав на следующую ссылку: {0}\n\nЭто сообщение сформировано автоматически, на него не нужно отвечать.'.format(
-        confirmation_url)
-    msg.html = '<p>Пожалуйста, подтвердите регистрацию, нажав на следующую ссылку: <a href="{0}">Подтвердить регистрацию</a></p><p><small>Это сообщение сформировано автоматически, на него не нужно отвечать.</small></p>'.format(
-        confirmation_url)
+    msg.body = 'Пожалуйста, подтвердите свою регистрацию, нажав на следующую ссылку: {0}\n\nЭто сообщение ' \
+               'сформировано автоматически, на него не нужно отвечать.'.format(confirmation_url)
+    msg.html = '<p>Пожалуйста, подтвердите регистрацию, нажав на следующую ссылку: <a href="{0}">Подтвердить ' \
+               'регистрацию</a></p><p><small>Это сообщение сформировано автоматически, на него не нужно ' \
+               'отвечать.</small></p>'.format(confirmation_url)
 
     mail.send(msg)
 
-    return jsonify(message="Письмо с подтверждением отправлено. Пожалуйста, подтвердите свою регистраци.."), 201
+    return jsonify(message="Письмо с подтверждением отправлено. Пожалуйста, подтвердите свою регистрацию."), 201
     # return jsonify(url_for('confirm_email', token=token, _external=True)), 201
     # return jsonify(message="Confirmation email sent. Please confirm your email."), 201
 
@@ -257,21 +259,12 @@ def reset_password():
                   sender=app.config['MAIL_USERNAME'],
                   recipients=[email])
 
-    msg.html = """
-    <html>
-      <body>
-        <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Здравствуйте!</h1>
-        <p style="color: #355C7D; font-family: Arial, sans-serif;">
-          Мы получили запрос на сброс вашего пароля. Если вы не делали этого запроса, просто проигнорируйте это письмо. 
-          В противном случае, вы можете сбросить свой пароль, перейдя по этой ссылке:
-        </p>
-        <a href="{}" style="background-color: #6C5B7B; color: #fff; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 20px 0;">
-          Нажмите здесь, чтобы сбросить пароль
-        </a>
-        <p style="color: #355C7D; font-family: Arial, sans-serif;">Спасибо!</p>
-      </body>
-    </html>
-    """.format(link)
+    msg.html = """<html> <body> <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Здравствуйте!</h1> <p 
+    style="color: #355C7D; font-family: Arial, sans-serif;"> Мы получили запрос на сброс вашего пароля. Если вы не 
+    делали этого запроса, просто проигнорируйте это письмо. В противном случае, вы можете сбросить свой пароль, 
+    перейдя по этой ссылке: </p> <a href="{}" style="background-color: #6C5B7B; color: #fff; padding: 10px 20px; 
+    text-decoration: none; display: inline-block; margin: 20px 0;"> Нажмите здесь, чтобы сбросить пароль </a> <p 
+    style="color: #355C7D; font-family: Arial, sans-serif;">Спасибо!</p> </body> </html> """.format(link)
 
     msg.body = 'Следуйте этой ссылке для сброса вашего пароля: {}'.format(link)
 
@@ -283,60 +276,6 @@ def reset_password():
         print(e)
 
     return 'Письмо отправлено!'
-
-
-# def reset_password():
-#     user_id = get_jwt_identity()
-#     user = User.query.get(user_id)
-#     if user is None:
-#         return jsonify({"msg": "User not found"}), 404
-#     email = user.email
-#     expires = datetime.timedelta(hours=24)  # Token will expire in 24 hours
-#     token = create_access_token(identity=email, expires_delta=expires)
-#
-#     msg = MIMEMultipart()
-#     msg['From'] = username # "your_email@example.com"
-#     msg['To'] = email
-#     msg['Subject'] = 'Password Reset Request'
-#     # TODO расположение токена
-#     link = url_for('api_reset_password_token', reset_token=token, _external=True)
-#
-#     html = """
-#     <html>
-#       <body>
-#         <h1 style="color: #355C7D; font-family: Arial, sans-serif;">Hello!</h1>
-#         <p style="color: #355C7D; font-family: Arial, sans-serif;">
-#           We received a request to reset your password. If you didn't make the request, just ignore this email.
-#           Otherwise, you can reset your password using this link:
-#         </p>
-#         <a href="{}" style="background-color: #6C5B7B; color: #fff; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 20px 0;">
-#           Click here to reset your password
-#         </a>
-#         <p style="color: #355C7D; font-family: Arial, sans-serif;">Thank you!</p>
-#       </body>
-#     </html>
-#     """.format(link)
-#     # TODO красивый шаблон корпоративного письма с ссылками на сайт от ЮРЫ
-#
-#     msg.attach(MIMEText(html, 'html'))
-#
-#     msg.attach(MIMEText('Follow this link to reset your password: {}'.format(link), 'plain'))
-#
-#     try:
-#         server = smtplib.SMTP(smtp_server,port)
-#         server.ehlo() # Can be omitted
-#         server.starttls() # Secure the connection
-#         server.ehlo() # Can be omitted
-#         server.login(username, password)
-#         server.sendmail(msg['From'], msg['To'], msg.as_string())
-#         server.close()
-#
-#         print('Email sent!')
-#     except Exception as e:
-#         # Print any error messages to stdout
-#         print(e)
-#
-#     return 'Email sent!'
 
 
 def reset_password_token(reset_token):
@@ -390,33 +329,6 @@ def create_order():
     except SQLAlchemyError as e:
         return jsonify({"msg": "Database error occurred. " + str(e)}), 500
 
-    #     # Handle file upload
-    # if 'file' in request.files:
-    #     file = request.files['file']
-    #     if file and allowed_file(file.filename):
-    #         order_directory = os.path.join(UPLOAD_DIRECTORY, str(new_order.id))
-    #
-    #         if not os.path.exists(order_directory):
-    #             os.makedirs(order_directory)
-    #
-    #         filename = secure_filename(file.filename)
-    #         file_path = os.path.join(order_directory, filename)
-    #         file.save(file_path)
-    #
-    #         # Save the file_path in your database
-    #         new_document = Document(
-    #             name=filename,
-    #             file_path=file_path,
-    #             order_id=new_order.id
-    #         )
-    #         db.session.add(new_document)
-    #         try:
-    #             db.session.commit()
-    #         except SQLAlchemyError as e:
-    #             return jsonify({"msg": "Database error occurred while saving document. " + str(e)}), 500
-    #
-    # return jsonify({"msg": "Order created successfully!"}), 201
-
     # TODO Проверить
     # Handle file upload
     if 'file' in request.files:
@@ -460,3 +372,61 @@ def create_order():
             return jsonify({"msg": "Invalid file type. Only .pdf, .jpg, .jpeg, .png, .gif files are allowed."}), 400
 
     return jsonify({"msg": "Order created successfully!"}), 201
+
+
+def update_order(order_id):
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"msg": "No data provided"}), 400
+
+    order = Order.query.get(order_id)
+
+    if not order:
+        return jsonify({"msg": "Order not found"}), 404
+
+    if 'status' in data:
+        order.status = data['status']
+
+    if 'client_id' in data:
+        user = User.query.get(data['client_id'])
+        if not user:
+            return jsonify({"msg": "User not found"}), 404
+        order.client_id = user.id
+
+    if 'service_id' in data:
+        service = Service.query.get(data['service_id'])
+        if not service:
+            return jsonify({"msg": "Service not found"}), 404
+        order.service_id = service.id
+
+    if 'order_date' in data:
+        try:
+            order.order_date = date.strptime(data['order_date'], '%Y-%m-%d %H:%M:%S')
+        except ValueError:
+            return jsonify({"msg": "Invalid date format. Use 'YYYY-MM-DD HH:MM:SS'"}), 400
+
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
+
+    return jsonify({"msg": "Order updated successfully!"}), 200
+
+
+def delete_order(order_id):
+    data = request.get_json()
+    if 'id' not in data:
+        return jsonify({"msg": "Missing order_id parameter"}), 400
+
+    order = Order.query.get(order_id)
+    if not order:
+        return jsonify({"msg": "Order not found"}), 404
+
+    db.session.delete(order)
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        return jsonify({"msg": "Database error occurred. " + str(e)}), 500
+
+    return jsonify({"msg": "Order deleted successfully!"}), 200

@@ -8,23 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 
-# вынести создание бд в этот модуль
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# from werkzeug.security import generate_password_hash, check_password_hash
-
-
-# Пользователи
-# Услуги
-# Админ
-# Заказы
-# Объекты?
-# Сотрудники?
-
-# хранение файлов
-# Отзывы?
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -46,7 +33,7 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'), nullable=False)
-    order_date = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    order_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     status = db.Column(db.String(80), nullable=False)
     # services = db.relationship('Service', secondary='order_service', backref='orders')
 
@@ -93,12 +80,6 @@ def delete_document_files(mapper, connection, target):
             shutil.rmtree(order_directory)
     except Exception as e:
         print(f"Error deleting directory: {e}")
-
-
-# Создание контекста приложения
-# with app.app_context():
-#     # Создание таблиц в базе данных
-#     db.create_all()
 
 
 # class Review(db.Model):
