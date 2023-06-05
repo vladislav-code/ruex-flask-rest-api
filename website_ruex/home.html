@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная страница</title>
 
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -15,18 +15,18 @@
     <section class="flex">
 
       <div id="menu-btn" class="fas fa-bars"></div>
-      <a href="{{ url_for('home') }}" class="logo"> <img src="{{ url_for('static', filename='images/logo.png') }}"></a>
-      <a href="{{ url_for('home') }}" class="logo">
+      <a href ="home.html" class="logo"> <img src="/images/logo.png"></a>
+      <a href ="home.html" class="logo"> 
         РусЭксперт-Сервис
       </a>
       <nav class="navbar">
 
-        <a href="{{ url_for('static', filename='home.html') }}">Главная страница</a>
-        <a href="{{ url_for('static', filename='services.html') }}">Услуги</a>
-        <a href="{{ url_for('static', filename='prices.html') }}">Цены</a>
-        <a href="{{ url_for('static', filename='about.html') }}">О нас</a>
-        <a href="{{ url_for('static', filename='contacts.html') }}">Контакты</a>
-        <a href="{{ url_for('static', filename='account.html') }}">Личный кабинет</a>            
+        <a href="home.html">Главная страница</a>
+        <a href="services.html">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="account.html">Личный кабинет</a>
 
       </nav>
       <div>
@@ -69,8 +69,8 @@
               
             </form>
 
-            <script src="{{ url_for('static', filename='js/inputmask.min.js') }}"></script>
-            <script src="{{ url_for('static', filename='js/phonemask.js') }}"></script>
+            <script src="/js/inputmask.min.js"></script>
+            <script src="js/phonemask.js"></script>
           </section>
         </div>
       </div>
@@ -234,7 +234,7 @@
     <div class="advantages-container">
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-1.png') }}"></a>
+          <img src="images/advantages-pic-1.png">
           <div>
             <h3>
               8 лет на рынке
@@ -245,7 +245,7 @@
       </div>
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-2.png') }}"></a>
+        <img src="images/advantages-pic-2.png">
           <div>
             <h3>
               Воплощаем идеи в жизнь
@@ -256,7 +256,7 @@
       </div>
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-3.png') }}"></a>
+          <img src="images/advantages-pic-3.png">
           <div>
             <h3>
               Персональный подход
@@ -267,7 +267,7 @@
       </div>
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-4.png') }}"></a>
+          <img src="images/advantages-pic-4.png">
           <div>
             <h3>
               Мы на связи 24/7
@@ -278,7 +278,7 @@
       </div>
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-5.png') }}"></a>
+          <img src="images/advantages-pic-5.png">
           <div>
             <h3>
               Эффективность
@@ -289,7 +289,7 @@
       </div>
       <div class="advantages-box">
         <div>
-          <img src="{{ url_for('static', filename='images/advantages-pic-6.png') }}"></a>
+          <img src="images/advantages-pic-6.png">
           <div>
             <h3>
               Выгода
@@ -317,9 +317,9 @@
       <div class="box">
         <h3>Дополнительные ссылки</h3>
         <a href="#"><i class="fas fa-angle-right"></i>Личный кабинет</a>
-        <a href="{{ url_for('static', filename='login.html') }}" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
-        <a href="{{ url_for('static', filename='register.html') }}" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
-        <a href="{{ url_for('static', filename='about.html') }}"><i class="fas fa-angle-right"></i>О нас</a> 
+        <a href="login.html" id="login-btn"><i class="fas fa-angle-right"></i>Авторизация</a>
+        <a href="register.html" id="register-btn"><i class="fas fa-angle-right"></i>Регистрация</a>
+        <a href="about.html"><i class="fas fa-angle-right"></i>О нас</a>
       </div>
       
       <div class="box">
@@ -347,9 +347,11 @@
 
   </footer>
 
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/homesubmenus.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/homecontact.js') }}"></script>
+  <script src="js/script.js"></script>
+
+  <script src="js/homesubmenus.js"></script>
+
+  <script src="js/homecontact.js"></script>
 
 </body>
 </html>
