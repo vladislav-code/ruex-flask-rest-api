@@ -104,9 +104,3 @@ def reset_password():
 @app.route('/api/reset-password/<reset_token>', methods=['POST'])
 def reset_password_token(reset_token):
     return reset_password_token(reset_token)
-
-
-# TODO change static to Nginx
-@app.route('/', methods=['GET'])
-def home():
-    return render_template('home.html')
