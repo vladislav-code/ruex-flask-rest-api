@@ -26,6 +26,12 @@ def login():
     return funcs.login()
 
 
+@app.route('/api/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    return funcs.refresh()
+
+
 @app.route('/api/user', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required()
 def handle_user():

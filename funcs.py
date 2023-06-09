@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 from utils import allowed_file
 from flask_mail import Message
 from flask import request, url_for, jsonify
-from flask_jwt_extended import create_access_token, get_jwt_identity, decode_token
+from flask_jwt_extended import create_access_token, get_jwt_identity, decode_token, create_refresh_token
 from main import mail
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -34,11 +34,17 @@ def login():
     data = request.get_json()
     user = User.query.filter_by(email=data['email']).first()
     if user and bcrypt.check_password_hash(user.password_hash, data['password']):
-        expires = datetime.timedelta(hours=4)
-        access_token = create_access_token(identity=user.id, expires_delta=expires)
-        return jsonify(access_token=access_token), 200
+        access_token = create_access_token(identity=user.id)
+        refresh_token = create_refresh_token(identity=user.id)
+        return jsonify(access_token=access_token, refresh_token=refresh_token), 200
     else:
         return jsonify(message="Invalid email or password"), 401
+
+
+def refresh():
+    current_user = get_jwt_identity()
+    access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=access_token)
 
 
 def handle_user():
